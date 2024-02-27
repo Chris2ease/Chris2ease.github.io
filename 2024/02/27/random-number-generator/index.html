@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="梯度下降, 一点点记录">
-    <meta name="description" content="">
+    <meta name="keywords" content="随机数生成器（RNG), 一点点记录">
+    <meta name="description" content="骰子天然不是RNG，RNG天然是骰子">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>梯度下降 | 一点点记录</title>
+    <title>随机数生成器（RNG) | 一点点记录</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -290,12 +290,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Eddie.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">梯度下降</h1>
+                    <h1 class="description center-align post-title">随机数生成器（RNG)</h1>
                 </div>
             </div>
         </div>
@@ -319,8 +319,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Pytorch/">
-                                <span class="chip bg-color">Pytorch</span>
+                            <a href="/tags/%E6%83%B3%E6%B3%95/">
+                                <span class="chip bg-color">想法</span>
                             </a>
                         
                     </div>
@@ -335,7 +335,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-02-25
+                    2024-02-27
                 </div>
                 
 
@@ -359,7 +359,22 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h1 id="骰子"><a href="#骰子" class="headerlink" title="骰子"></a>骰子</h1><p>骰子是一种用于游戏决策的小立方体，其历史最早可追溯到公元前2000多年的古埃及时期，是一种常见的工具。它们通常由木材、塑料或金属制成，每个面上都标有不同的数字。标准的骰子是质量均匀分布的正立方体，它们的形状使其能够在投掷后以随机的方式显示一个数字。它们具有简单而直观的设计，作为随机数生成器被用于各种娱乐教育场合中。骰子似乎是偶然性与必然性的结合体，掷骰子这看似随机的事件也有其必然确定的暴力所在，其结局由玩家决定但似乎又是命中注定。</p>
+<p><strong>Casino、D&amp;D、大富翁等现实桌游道具</strong><br><img src="/2024/02/27/random-number-generator/rng0.png" alt="rng-0"></p>
+<p><img src="/2024/02/27/random-number-generator/rng3.png" alt="rng-3"></p>
+<p>现代电子游戏中也常常借用骰子的形象来表示随机事件触发器的状态，给虚拟世界添加一抹现实的色彩，拉近创作者与玩家间的距离，在给游戏剧情增添紧张感的同时减少了随机数产生器底层算法的神秘感，增加游戏事件随机性的可性度，笔者最喜爱的两款RPG游戏《极乐迪斯科》与《博德之门3》都是采用了这种设计。</p>
+<p><em><strong>DISCO ELYSIUM</strong></em></p>
+<p><img src="/2024/02/27/random-number-generator/rng2.png" alt="rng-2"></p>
+<p><em><strong>Baldur’s Gate3</strong></em></p>
+<p><img src="/2024/02/27/random-number-generator/rng1.png" alt="rng-1"></p>
+<h1 id="现代常见的随机数生成器"><a href="#现代常见的随机数生成器" class="headerlink" title="现代常见的随机数生成器"></a>现代常见的随机数生成器</h1><ol>
+<li>物理随机数生成器：物理随机数生成器利用物理过程中的不确定性来生成随机数。例如，使用放射性衰变、热噪声或光传感器等原理来获取随机性。这些方法产生的随机数被认为是真正的随机数，因为它们是基于物理过程的不可预测性。</li>
+<li>伪随机数生成器（PRNG）：伪随机数生成器使用确定性算法生成一系列看似随机的数字序列。这些算法通常使用一个种子（或起始点），通过迭代运算生成一系列数字。伪随机数生成器的输出是根据初始种子和算法的确定性而可重复的，但对于大多数应用而言，它们的随机性足够好了。计算机程序中常用的随机函数就是伪随机数生成器。</li>
+<li>加密安全随机数生成器（CSPRNG）：这是一种特殊类型的伪随机数生成器，它使用加密算法和随机种子生成高质量的随机数。CSPRNG具有更高的随机性和安全性，适用于需要加密安全性的应用，如密码学和安全通信。</li>
+<li>基于硬件的随机数生成器：现代计算机和移动设备通常配备了硬件随机数生成器，利用微处理器内部的物理噪声源或其他硬件特性来生成随机数。这些硬件随机数生成器提供了更高的随机性和安全性，适用于需要高度随机性的应用。</li>
+<li>外部随机数据源：有时，可以使用来自外部环境的随机数据源来生成随机数。例如，可以使用大气噪声、网络延迟或鼠标移动等环境噪声作为随机性的来源。</li>
+</ol>
+
                 
             </div>
             <hr/>
@@ -385,7 +400,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://chris2ease.github.io/2024/02/25/gradient-descent/">https://chris2ease.github.io/2024/02/25/gradient-descent/</a>
+                    <a href="https://chris2ease.github.io/2024/02/27/random-number-generator/">https://chris2ease.github.io/2024/02/27/random-number-generator/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -423,8 +438,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Pytorch/">
-                                    <span class="chip bg-color">Pytorch</span>
+                                <a href="/tags/%E6%83%B3%E6%B3%95/">
+                                    <span class="chip bg-color">想法</span>
                                 </a>
                             
                         </div>
@@ -503,30 +518,28 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/02/25/gradient-descent/">
+                <a href="/2024/02/28/gradient-descent/">
                     <div class="card-image">
                         
+                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/PyTorch.png" class="responsive-img" alt="梯度下降法解决线性回归问题">
                         
-                        <img src="/medias/featureimages/0.png" class="responsive-img" alt="梯度下降">
-                        
-                        <span class="card-title">梯度下降</span>
+                        <span class="card-title">梯度下降法解决线性回归问题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            梯度下降法求极小值点的基本原理
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-25
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-02-28
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -535,7 +548,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -708,13 +720,6 @@
 
 </main>
 
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-    });
-</script>
 
 
 
