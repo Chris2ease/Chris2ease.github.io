@@ -363,9 +363,9 @@
 <p>梯度下降是一种广泛用于求解线性和非线性模型最优解的迭代算法，它的中心思想在于通过迭代次数的递增，调整使得损失函数最小化的权重。</p>
 <p>它的作用是用于优化一个目标函数，如果要最小化一个损失函数，使用的就是梯度下降法，梯度下降所要求解的x是函数极小值点。</p>
 <p>如下图所示，找到J(θ)最小值</p>
-<p><img src="/./gradient-descent%5Cgd-0.png" alt="gd-0"></p>
+<p><img src="/2024/02/28/gradient-descent/gd-0.png" alt="gd-0"></p>
 <p>其实，J(θ)的真正图形是类似下面这样的，因为其是一个凸函数，只有一个全局最优解，所以不必担心像上图一样找到局部最优解</p>
-<p><img src="/./gradient-descent%5Cgd-1.png" alt="gd-1"></p>
+<p><img src="/2024/02/28/gradient-descent/gd-1.png" alt="gd-1"></p>
 <p>不妨举一个简单函数的例子：<br>$$<br>f(x)&#x3D;x^2*sin(x)<br>$$</p>
 <p>$$<br>f’(x)&#x3D;2<em>x</em>sin(x)+x^2*cos(x)<br>$$</p>
 <p>在逼近极值时,下一个自变量x值是通过<br>$$<br>x - lr(learningrate)*f’(x)<br>$$<br>来确定的。</p>
