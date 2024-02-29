@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="梯度下降法解决线性回归问题, 一点点记录">
-    <meta name="description" content="梯度下降法求极小值点的基本原理">
+    <meta name="keywords" content="February 29th, 一点点记录">
+    <meta name="description" content="纪念曾经化身恶魔猎手的美好时光">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>梯度下降法解决线性回归问题 | 一点点记录</title>
+    <title>February 29th | 一点点记录</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -290,12 +290,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/PyTorch.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Demonic_Illidan_full.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">梯度下降法解决线性回归问题</h1>
+                    <h1 class="description center-align post-title">February 29th</h1>
                 </div>
             </div>
         </div>
@@ -319,8 +319,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Pytorch/">
-                                <span class="chip bg-color">Pytorch</span>
+                            <a href="/tags/%E8%8A%82%E6%97%A5/">
+                                <span class="chip bg-color">节日</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%83%B3%E6%B3%95/">
+                                <span class="chip bg-color">想法</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%B9%BB%E7%81%AD/">
+                                <span class="chip bg-color">幻灭</span>
                             </a>
                         
                     </div>
@@ -335,7 +343,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-02-28
+                    2024-02-29
                 </div>
                 
 
@@ -359,78 +367,37 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><strong>梯度下降是机器学习中的常用算法，通过不断迭代计算函数的梯度，判断该点的某一方向和目标之间的距离，最终求得最小的损失函数和相关参数，为建立线性模型提供支持。</strong></p>
-<p>梯度下降是一种广泛用于求解线性和非线性模型最优解的迭代算法，它的中心思想在于通过迭代次数的递增，调整使得损失函数最小化的权重。</p>
-<p>它的作用是用于优化一个目标函数，如果要最小化一个损失函数，使用的就是梯度下降法，梯度下降所要求解的x是函数极小值点。</p>
-<p>如下图所示，找到J(θ)最小值</p>
-<p><img src="/2024/02/28/gradient-descent/gd-0.png" alt="gd-0"></p>
-<p>其实，J(θ)的真正图形是类似下面这样的，因为其是一个凸函数，只有一个全局最优解，所以不必担心像上图一样找到局部最优解</p>
-<p><img src="/2024/02/28/gradient-descent/gd-1.png" alt="gd-1"></p>
-<p>不妨举一个简单函数的例子：<br>$$<br>f(x)&#x3D;x^2*sin(x)<br>$$</p>
-<p>$$<br>f’(x)&#x3D;2<em>x</em>sin(x)+x^2*cos(x)<br>$$</p>
-<p>在逼近极值时,下一个自变量x值是通过<br>$$<br>x - lr(learningrate)*f’(x)<br>$$<br>来确定的。</p>
-<p>事实上，不同的算法有不同的lr,一个适合的lr可以使抖动次数变少，更快得到极值点的位置，一般取0.001或0.005，对于新奇的算法，需要调试探索其合适的lr。</p>
-<p>已知一批数据符合<br>$$<br>y&#x3D;w*x+b+c<br>$$<br>高斯噪声c(eps)数据符合 **N(0.01,1)**的分布,</p>
-<p>1.567&#x3D;w*1+b+eps</p>
-<p>3.043&#x3D;w*2+b+eps</p>
-<p>4.519&#x3D;w*3+b+eps</p>
-<p>……</p>
-<p>在实际问题给出的数据中，我们得到近似解即可</p>
-<p>事实上很多情况下我们并不知道函数的基本模型是什么，而是通过观察数据的分布去假设并验证是否拟合</p>
-<p>为了使用梯度算法来求w和b的近似值，我们建立变量loss，使loss最小的w和b的值即是近似解<br>$$<br>loss&#x3D;\sum_{i&#x3D;1}^k(w*x_i+b-y)^2<br>$$</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-
-<span class="token comment"># y = wx + b</span>
-<span class="token keyword">def</span> <span class="token function">compute_error_for_line_given_points</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> w<span class="token punctuation">,</span> points<span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment">#统计总误差</span>
-    totalError <span class="token operator">=</span> <span class="token number">0</span>
-    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">(</span>points<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        x <span class="token operator">=</span> points<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
-        y <span class="token operator">=</span> points<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
-        totalError <span class="token operator">+=</span> <span class="token punctuation">(</span>y <span class="token operator">-</span> <span class="token punctuation">(</span>w <span class="token operator">*</span> x <span class="token operator">+</span> b<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">**</span> <span class="token number">2</span>
-    <span class="token keyword">return</span> totalError <span class="token operator">/</span> <span class="token builtin">float</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>points<span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">step_gradient</span><span class="token punctuation">(</span>b_current<span class="token punctuation">,</span> w_current<span class="token punctuation">,</span> points<span class="token punctuation">,</span> learningRate<span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment">#求loss对b和w的梯度，分别将b和w看作自变量求导，new_x=x - lr(learningrate)*f'(x) 更新b与w的值</span>
-    b_gradient <span class="token operator">=</span> <span class="token number">0</span>
-    w_gradient <span class="token operator">=</span> <span class="token number">0</span>
-    N <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>points<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">(</span>points<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        x <span class="token operator">=</span> points<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
-        y <span class="token operator">=</span> points<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
-        b_gradient <span class="token operator">+=</span> <span class="token operator">-</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">/</span>N<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>y <span class="token operator">-</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>w_current <span class="token operator">*</span> x<span class="token punctuation">)</span> <span class="token operator">+</span> b_current<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        w_gradient <span class="token operator">+=</span> <span class="token operator">-</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">/</span>N<span class="token punctuation">)</span> <span class="token operator">*</span> x <span class="token operator">*</span> <span class="token punctuation">(</span>y <span class="token operator">-</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>w_current <span class="token operator">*</span> x<span class="token punctuation">)</span> <span class="token operator">+</span> b_current<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    new_b <span class="token operator">=</span> b_current <span class="token operator">-</span> <span class="token punctuation">(</span>learningRate <span class="token operator">*</span> b_gradient<span class="token punctuation">)</span>
-    new_w <span class="token operator">=</span> w_current <span class="token operator">-</span> <span class="token punctuation">(</span>learningRate <span class="token operator">*</span> w_gradient<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> <span class="token punctuation">[</span>new_b<span class="token punctuation">,</span> new_w<span class="token punctuation">]</span>
-
-<span class="token keyword">def</span> <span class="token function">gradient_descent_runner</span><span class="token punctuation">(</span>points<span class="token punctuation">,</span> starting_b<span class="token punctuation">,</span> starting_w<span class="token punctuation">,</span> learning_rate<span class="token punctuation">,</span> num_iterations<span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment">#设定迭代次数</span>
-    b <span class="token operator">=</span> starting_b
-    w <span class="token operator">=</span> starting_w
-    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>num_iterations<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        b<span class="token punctuation">,</span> w <span class="token operator">=</span> step_gradient<span class="token punctuation">(</span>b<span class="token punctuation">,</span> w<span class="token punctuation">,</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>points<span class="token punctuation">)</span><span class="token punctuation">,</span> learning_rate<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> <span class="token punctuation">[</span>b<span class="token punctuation">,</span> w<span class="token punctuation">]</span>
-
-<span class="token keyword">def</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment">#输出总误差</span>
-    points <span class="token operator">=</span> np<span class="token punctuation">.</span>genfromtxt<span class="token punctuation">(</span><span class="token string">"data.csv"</span><span class="token punctuation">,</span> delimiter<span class="token operator">=</span><span class="token string">","</span><span class="token punctuation">)</span>
-    learning_rate <span class="token operator">=</span> <span class="token number">0.0001</span>
-    initial_b <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment"># initial y-intercept guess</span>
-    initial_w <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment"># initial slope guess</span>
-    num_iterations <span class="token operator">=</span> <span class="token number">1000</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Starting gradient descent at b = &#123;0&#125;, m = &#123;1&#125;, error = &#123;2&#125;"</span>
-          <span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>initial_b<span class="token punctuation">,</span> initial_w<span class="token punctuation">,</span>
-                  compute_error_for_line_given_points<span class="token punctuation">(</span>initial_b<span class="token punctuation">,</span> initial_w<span class="token punctuation">,</span> points<span class="token punctuation">)</span><span class="token punctuation">)</span>
-          <span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Running..."</span><span class="token punctuation">)</span>
-    <span class="token punctuation">[</span>b<span class="token punctuation">,</span> w<span class="token punctuation">]</span> <span class="token operator">=</span> gradient_descent_runner<span class="token punctuation">(</span>points<span class="token punctuation">,</span> initial_b<span class="token punctuation">,</span> initial_w<span class="token punctuation">,</span> learning_rate<span class="token punctuation">,</span> num_iterations<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"After &#123;0&#125; iterations b = &#123;1&#125;, m = &#123;2&#125;, error = &#123;3&#125;"</span><span class="token punctuation">.</span>
-          <span class="token builtin">format</span><span class="token punctuation">(</span>num_iterations<span class="token punctuation">,</span> b<span class="token punctuation">,</span> w<span class="token punctuation">,</span>
-                 compute_error_for_line_given_points<span class="token punctuation">(</span>b<span class="token punctuation">,</span> w<span class="token punctuation">,</span> points<span class="token punctuation">)</span><span class="token punctuation">)</span>
-          <span class="token punctuation">)</span>
-
-<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
-    run<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>“data.csv”文件的内容如下（逗号已省略）<br>32.50234527	31.70700585<br>53.42680403	68.77759598<br>61.53035803	62.5623823<br>47.47563963	71.54663223<br>59.81320787	87.23092513<br>55.14218841	78.21151827<br>52.21179669	79.64197305<br>39.29956669	59.17148932<br>48.10504169	75.3312423<br>52.55001444	71.30087989<br>45.41973014	55.16567715<br>54.35163488	82.47884676<br>44.1640495	62.00892325<br>58.16847072	75.39287043<br>56.72720806	81.43619216<br>48.95588857	60.72360244<br>44.68719623	82.89250373<br>60.29732685	97.37989686<br>45.61864377	48.84715332<br>38.81681754	56.87721319<br>66.18981661	83.87856466<br>65.41605175	118.5912173<br>47.48120861	57.25181946<br>41.57564262	51.39174408<br>51.84518691	75.38065167<br>59.37082201	74.76556403<br>57.31000344	95.45505292<br>63.61556125	95.22936602<br>46.73761941	79.05240617<br>50.55676015	83.43207142<br>52.22399609	63.35879032<br>35.56783005	41.4128853<br>42.43647694	76.61734128<br>58.16454011	96.76956643<br>57.50444762	74.08413012<br>45.44053073	66.58814441<br>61.89622268	77.76848242<br>33.09383174	50.71958891<br>36.43600951	62.12457082<br>37.67565486	60.81024665<br>44.55560838	52.68298337<br>43.31828263	58.56982472<br>50.07314563	82.90598149<br>43.87061265	61.4247098<br>62.99748075	115.2441528<br>32.66904376	45.57058882<br>40.16689901	54.0840548<br>53.57507753	87.99445276<br>33.86421497	52.72549438<br>64.70713867	93.57611869<br>38.11982403	80.16627545<br>44.50253806	65.10171157<br>40.59953838	65.56230126<br>41.72067636	65.28088692<br>51.08863468	73.43464155<br>55.0780959	71.13972786<br>41.37772653	79.10282968<br>62.49469743	86.52053844<br>49.20388754	84.74269781<br>41.10268519	59.35885025<br>41.18201611	61.68403752<br>50.18638949	69.84760416<br>52.37844622	86.09829121<br>50.13548549	59.10883927<br>33.64470601	69.89968164<br>39.55790122	44.86249071<br>56.13038882	85.49806778<br>57.36205213	95.53668685<br>60.26921439	70.25193442<br>35.67809389	52.72173496<br>31.588117	50.39267014<br>53.66093226	63.64239878<br>46.68222865	72.24725107<br>43.10782022	57.81251298<br>70.34607562	104.2571016<br>44.49285588	86.64202032<br>57.5045333	91.486778<br>36.93007661	55.23166089<br>55.80573336	79.55043668<br>38.95476907	44.84712424<br>56.9012147	80.20752314<br>56.86890066	83.14274979<br>34.3331247	55.72348926<br>59.04974121	77.63418251<br>57.78822399	99.05141484<br>54.28232871	79.12064627<br>51.0887199	69.58889785<br>50.28283635	69.51050331<br>44.21174175	73.68756432<br>38.00548801	61.36690454<br>32.94047994	67.17065577<br>53.69163957	85.66820315<br>68.76573427	114.8538712<br>46.2309665	90.12357207<br>68.31936082	97.91982104<br>50.03017434	81.53699078<br>49.23976534	72.11183247<br>50.03957594	85.23200734<br>48.14985889	66.22495789<br>25.12848465	53.45439421</p>
-<p><img src="/2024/02/28/gradient-descent/gd-2.png" alt="结果展示"></p>
+                <h2 id="巨龙年2月29号DH还未上线，龙年2月29号国服已是灰烬。"><a href="#巨龙年2月29号DH还未上线，龙年2月29号国服已是灰烬。" class="headerlink" title="巨龙年2月29号DH还未上线，龙年2月29号国服已是灰烬。"></a>巨龙年2月29号DH还未上线，龙年2月29号国服已是灰烬。</h2><p><img src="/2024/02/29/february-29th/Year-of-the-Dragon.png" alt="龍年"></p>
+<p>今天是2024年2月29号，上一个2月29号还是在网课时代。这四年变化太多，有感而发。</p>
+<p><strong>Nothing lasts forever,so I live in the moment.</strong></p>
+<p>那时的数学课，一、三、五百家争鸣，二、四、六百鬼夜行。胡校长上课，“同学们，再长的冬天也会过去，春天总会来的。”，评论区玫瑰朵朵，整齐划一，例题一出，实名用户争先恐后发答案；辉哥上课，“根据后台统计的数据，选B和D的同学差不多各占一半，五五开啊……”，马上，伞兵一号同学就截图百度上卢本伟的头像作为课堂笔记发送到公共讨论区中，场面开始失控，A@B,B diss A，弹幕里充斥着损友P图与大头照，钉钉群里顿时充满了快活的空气……</p>
+<p>我往往挂着后台搓炉石，祈祷姐夫和红龙女王赶紧到手，祈祷对面不带信天翁，那时的我相信法师是暴雪的亲儿子，慢速宇宙永远不死，对新版本不以为意，殊不知即将到来的绿色精灵会在不久后成为我的父神。</p>
+<p><img src="/2024/02/29/february-29th/ashes-of-outland.png" alt="外域的灰烬于2020年4月8号上线"></p>
+<p><img src="/2024/02/29/february-29th/HERO-10a.gif" alt="千胜蛋总"></p>
+<h4 id="YOU-ARE-NOT-PREPARED"><a href="#YOU-ARE-NOT-PREPARED" class="headerlink" title="YOU ARE NOT PREPARED!"></a><strong>YOU ARE NOT PREPARED!</strong></h4><h4 id="你们这是自寻死路！"><a href="#你们这是自寻死路！" class="headerlink" title="你们这是自寻死路！"></a><strong>你们这是自寻死路！</strong></h4><p><img src="/2024/02/29/february-29th/Demon-Hunter-icon.png" alt="成为一名光荣的恶魔猎手吧"></p>
+<p>新版本上线后，节奏极快的瞎子们完全霸占了天梯——全职业唯一的一费技能恶魔之爪、0费的双生法术双刃斩击、5费流放减3*3费的古尔丹之颅、1费打5的恶魔变形、冲锋且友军无视嘲讽的凯恩日怒、5费3-4可多段攻击的埃辛诺斯战刃，对于当时仅仅30滴血的慢速卡组来说，能活着看到恶魔猎手拍下女祭司已实属不易。一旦挂好蛋刀，9费疾影+心中的恶魔+变脸即可体验无伤手撕两只死亡之翼再砍伽拉克隆12滴血的屠龙壮举，真可谓天神下凡。被打的心服口服，我果断将所有法师职业卡分解，转职恶魔猎手。伊利丹？谁会不爱这么一位天赋异禀，亦正亦邪，智勇双全的痴情战神呢？</p>
+<p>于此同时，高二由文转理。新高考，但是物化生。高二是最漫长的，写不完的试卷和作业、听不完的竞赛和讲座、遥遥无期的高考，只有每周六晚上利用可怜的90分钟打几把天梯，看看卡牌收集。终于有一天，对面的教学楼空了，伊利丹也有了五百胜金框，管他什么牛鬼蛇神，下怪，变脸，砍。时间变得很快，成年了，首考百天倒计时了，看马尔克斯、加缪，打炉石，首考结束了，首考出分了，高考百天倒计时了，看尼采、海德格尔，打炉石，</p>
+<p>高考结束了。</p>
+<p>买卡，买很多卡！冲榜，冲狂野榜！Vicky让我们推荐英语学习资料，我说：“打《Hearthstone》就行。”</p>
+<p>”探寻沉没之城“给DH带来了众多优质奇数卡，Vicious Slitherspear, Multi-Strike , Predation , Lady S’theno, Xhilag of the Abyes……果断合成金巴库，金火车王，金奥数傀儡，金荣誉击杀刀，进军狂野。仅仅3天，冲烂了无数宇宙卡组，与不计其数的剑鱼贼，海盗战拼刀法，在晋级赛上砍翻了通往传说之路上的最后一个水手玛维，达到最高段位，也成功解锁了蛋总的千胜恶魔形态。</p>
+<h2 id="那个夏天"><a href="#那个夏天" class="headerlink" title="那个夏天"></a>那个夏天</h2><p><img src="/2024/02/29/february-29th/hearthstone-rank.jpg" alt="千胜+狂野传说"></p>
+<p><strong>伊利达雷百夫长——凯恩-日怒</strong></p>
+<p><img src="/2024/02/29/february-29th/Kayn-Sunfury-Golden.png" alt="凯恩日怒"></p>
+<p><strong>受不了了——恶魔变形</strong></p>
+<p><img src="/2024/02/29/february-29th/Metamorphosis-Golden.png" alt="恶魔变形"></p>
+<p><strong>最美巨型（不接受反驳）——深渊希拉格</strong></p>
+<p><img src="/2024/02/29/february-29th/Xhilag-of-the-Abyss-Golden.png" alt="深渊希拉格"></p>
+<p><strong>可爱蛋刀——埃辛诺斯战刃</strong></p>
+<p><img src="/2024/02/29/february-29th/Warglaives-of-Azzinoth-Golden.png" alt="埃辛诺斯战刃"></p>
+<p><strong>真正的暴龙王——伊利达雷审判官</strong></p>
+<p><img src="/2024/02/29/february-29th/Illdari-Inquisitor.png" alt="伊利达雷审判官"></p>
+<p><strong>LEEROY——JENKINS！！！——火车王里埃诺</strong></p>
+<p><img src="/2024/02/29/february-29th/Leeroy-Jenkins-Golden.png" alt="火车王利埃诺"></p>
+<p><strong>登峰造极——噬月者巴库</strong></p>
+<p><img src="/2024/02/29/february-29th/Baku-the-Mooneater-Golden.png" alt="噬月者巴库"></p>
+<p><strong>海城版本是恶魔猎手强度最高的版本（除去新兵阶段），纳堡上线后，雷纳索尔王子将英雄血量提升至40，快攻瞎的生存空间被挤压殆尽。遗憾的是，直到2023年1月24日暴雪停止在中国的战网服务，伊利丹的恶魔体系依旧没能成型，而新职业死骑一出，恶魔猎手的生存环境只会是雪上加霜。</strong></p>
+<h2 id="纳堡之后，中国再无暴雪。"><a href="#纳堡之后，中国再无暴雪。" class="headerlink" title="纳堡之后，中国再无暴雪。"></a><strong>纳堡之后，中国再无暴雪。</strong></h2><p><img src="/2024/02/29/february-29th/break-up.png" alt="暴雪遗书"></p>
+<h2 id="Dear-Illdan"><a href="#Dear-Illdan" class="headerlink" title="Dear Illdan:"></a><strong>Dear Illdan:</strong></h2><h2 id="Long-time-no-see-my-college-life-is-going-well-Currently-in-a-relationship-with-Apex-it’s-great-but-I-still-think-of-you-Hope-everything-is-going-well-with-you"><a href="#Long-time-no-see-my-college-life-is-going-well-Currently-in-a-relationship-with-Apex-it’s-great-but-I-still-think-of-you-Hope-everything-is-going-well-with-you" class="headerlink" title="Long time no see, my college life is going well. Currently in a relationship with Apex, it’s great, but I still think of you. Hope everything is going well with you."></a>Long time no see, my college life is going well. Currently in a relationship with Apex, it’s great, but I still think of you. Hope everything is going well with you.</h2><h3 id="Chris921127"><a href="#Chris921127" class="headerlink" title="Chris921127"></a>Chris921127</h3><p>​                                                                                                                              </p>
 
                 
             </div>
@@ -457,7 +424,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://chris2ease.github.io/2024/02/28/gradient-descent/">https://chris2ease.github.io/2024/02/28/gradient-descent/</a>
+                    <a href="https://chris2ease.github.io/2024/02/29/february-29th/">https://chris2ease.github.io/2024/02/29/february-29th/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -495,8 +462,16 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Pytorch/">
-                                    <span class="chip bg-color">Pytorch</span>
+                                <a href="/tags/%E8%8A%82%E6%97%A5/">
+                                    <span class="chip bg-color">节日</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%83%B3%E6%B3%95/">
+                                    <span class="chip bg-color">想法</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%B9%BB%E7%81%AD/">
+                                    <span class="chip bg-color">幻灭</span>
                                 </a>
                             
                         </div>
@@ -575,9 +550,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/02/29/february-29th/">
                     <div class="card-image">
@@ -594,9 +570,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-02-29
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -605,6 +581,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -631,23 +608,23 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/02/27/random-number-generator/">
+                <a href="/2024/02/28/gradient-descent/">
                     <div class="card-image">
                         
-                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Eddie.png" class="responsive-img" alt="随机数生成器（RNG)">
+                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/PyTorch.png" class="responsive-img" alt="梯度下降法解决线性回归问题">
                         
-                        <span class="card-title">随机数生成器（RNG)</span>
+                        <span class="card-title">梯度下降法解决线性回归问题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            骰子天然不是RNG，RNG天然是骰子
+                            梯度下降法求极小值点的基本原理
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-28
                             </span>
                         <span class="publish-author">
                             
@@ -660,8 +637,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%83%B3%E6%B3%95/">
-                        <span class="chip bg-color">想法</span>
+                    <a href="/tags/Pytorch/">
+                        <span class="chip bg-color">Pytorch</span>
                     </a>
                     
                 </div>
@@ -785,13 +762,6 @@
 
 </main>
 
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-    });
-</script>
 
 
 
