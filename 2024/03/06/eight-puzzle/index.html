@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="jz101-Eight-Puzzle, 一点点记录">
+    <meta name="keywords" content="JZ101-Eight-Puzzle, 一点点记录">
     <meta name="description" content="BFS解决八数码问题">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>jz101-Eight-Puzzle | 一点点记录</title>
+    <title>JZ101-Eight-Puzzle | 一点点记录</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -295,7 +295,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">jz101-Eight-Puzzle</h1>
+                    <h1 class="description center-align post-title">JZ101-Eight-Puzzle</h1>
                 </div>
             </div>
         </div>
@@ -430,7 +430,8 @@ int main()&#123;
     return 0;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>事实上<strong>原始的BFS无法找出全部的最短路径，只能得到一个解</strong>。原始的BFS算法在遇到已经访问过的状态时会跳过该状态，这可能导致某些分支被提前剪枝，无法搜索到所有解。它通过使用<code>unordered_map</code>来记录已访问的状态，保证每个状态只被访问一次，从而避免进入循环。此题如果将dx,dy,dmove数组中元素的值重排顺序，所输出的最短路径就不是按照udlr的优先顺序，就可能会得到不同的答案。</p>
+<p>事实上<strong>原始的BFS无法找出全部的最短路径，只能得到一个解</strong>。</p>
+<p>原始的BFS算法在遇到已经访问过的状态时会跳过该状态，这可能导致某些分支被提前剪枝，无法搜索到所有解。它通过使用<code>unordered_map</code>来记录已访问的状态，保证每个状态只被访问一次，从而避免进入循环。此题如果将dx,dy,dmove数组中元素的值重排顺序，所输出的最短路径就不是按照udlr的优先顺序，就可能会得到不同的答案。</p>
 
                 
             </div>
@@ -583,9 +584,9 @@ int main()&#123;
                 <a href="/2024/03/06/eight-puzzle/">
                     <div class="card-image">
                         
-                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/code.png" class="responsive-img" alt="jz101-Eight-Puzzle">
+                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/code.png" class="responsive-img" alt="JZ101-Eight-Puzzle">
                         
-                        <span class="card-title">jz101-Eight-Puzzle</span>
+                        <span class="card-title">JZ101-Eight-Puzzle</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
