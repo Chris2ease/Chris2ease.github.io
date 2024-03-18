@@ -359,7 +359,65 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>DKT核心代码是三个文件:”deep_knowledge_tracing_model.py“,”data.py”,”main.py”.</p>
+<h2 id="”deep-knowledge-tracing-model-py“"><a href="#”deep-knowledge-tracing-model-py“" class="headerlink" title="”deep_knowledge_tracing_model.py“"></a>”deep_knowledge_tracing_model.py“</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
+
+<span class="token keyword">class</span> <span class="token class-name">DeepKnowledgeTracing</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""Deep Knowledge tracing model"""</span>
+
+    <span class="token comment"># 构造方法 tie_weights是参数共享的意思</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> rnn_type<span class="token punctuation">,</span> input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> num_skills<span class="token punctuation">,</span> nlayers<span class="token punctuation">,</span> dropout<span class="token operator">=</span><span class="token number">0.6</span><span class="token punctuation">,</span> tie_weights<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 重构8个字典属性</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>DeepKnowledgeTracing<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> rnn_type <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token string">'LSTM'</span><span class="token punctuation">,</span> <span class="token string">'GRU'</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+            <span class="token comment"># 让rnn模型为LSTM或者GRU，后使用getattr函数取出对应模型的实例</span>
+            self<span class="token punctuation">.</span>rnn <span class="token operator">=</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>nn<span class="token punctuation">,</span> rnn_type<span class="token punctuation">)</span><span class="token punctuation">(</span>input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> nlayers<span class="token punctuation">,</span> batch_first<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> dropout<span class="token operator">=</span>dropout<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                nonlinearity <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'RNN_TANH'</span><span class="token punctuation">:</span> <span class="token string">'tanh'</span><span class="token punctuation">,</span> <span class="token string">'RNN_RELU'</span><span class="token punctuation">:</span> <span class="token string">'relu'</span><span class="token punctuation">&#125;</span><span class="token punctuation">[</span>rnn_type<span class="token punctuation">]</span>
+            <span class="token keyword">except</span> KeyError<span class="token punctuation">:</span>
+                <span class="token keyword">raise</span> ValueError<span class="token punctuation">(</span><span class="token triple-quoted-string string">"""An invalid option for `--model` was supplied,
+                                     options are ['LSTM', 'GRU', 'RNN_TANH' or 'RNN_RELU']"""</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>rnn <span class="token operator">=</span> nn<span class="token punctuation">.</span>RNN<span class="token punctuation">(</span>input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> nlayers<span class="token punctuation">,</span> nonlinearity<span class="token operator">=</span>nonlinearity<span class="token punctuation">,</span> dropout<span class="token operator">=</span>dropout<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>decoder <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>hidden_size<span class="token punctuation">,</span> num_skills<span class="token punctuation">)</span>
+        <span class="token comment"># input维度是(seq_size, batch_size, input_size)</span>
+        <span class="token comment"># h0维度是(numLayers, batch_size, hidden_size)</span>
+        <span class="token comment"># output维度(seq_size, batch_size, hidden_size)</span>
+        <span class="token comment"># hidden维度(numLayers, batch_size, hidden_size)</span>
+        self<span class="token punctuation">.</span>init_weights<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>rnn_type <span class="token operator">=</span> rnn_type
+        self<span class="token punctuation">.</span>nhid <span class="token operator">=</span> hidden_size
+        self<span class="token punctuation">.</span>nlayers <span class="token operator">=</span> nlayers
+
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> inputs<span class="token punctuation">,</span> hidden<span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment"># 这里提示函数名与内置函数名一样</span>
+        <span class="token comment"># input = self.drop(input)</span>
+        output<span class="token punctuation">,</span> hidden <span class="token operator">=</span> self<span class="token punctuation">.</span>rnn<span class="token punctuation">(</span>inputs<span class="token punctuation">,</span> hidden<span class="token punctuation">)</span>
+        <span class="token comment"># output = self.drop(output)</span>
+        <span class="token comment"># contiguous()一般都会和view()搭配在一起使用，view的使用要求空间连续，相当于tensorflow中的reshape</span>
+        <span class="token comment"># 假设output是2*3*3的，则view的2个参数值分别为2*3，3</span>
+        <span class="token comment"># 将output的最后一个维度hidden_size变为num_skills</span>
+        decoded <span class="token operator">=</span> self<span class="token punctuation">.</span>decoder<span class="token punctuation">(</span>output<span class="token punctuation">.</span>contiguous<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>view<span class="token punctuation">(</span>output<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">*</span> output<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> output<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> decoded<span class="token punctuation">,</span> hidden
+
+    <span class="token comment"># 这里只初始化了每个cell中的h和c</span>
+    <span class="token keyword">def</span> <span class="token function">init_hidden</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> bsz<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 每一隐层参数</span>
+        weight <span class="token operator">=</span> <span class="token builtin">next</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># 如果是LSTM的话还需要c</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>rnn_type <span class="token operator">==</span> <span class="token string">'LSTM'</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token punctuation">(</span>weight<span class="token punctuation">.</span>new_zeros<span class="token punctuation">(</span>self<span class="token punctuation">.</span>nlayers<span class="token punctuation">,</span> bsz<span class="token punctuation">,</span> self<span class="token punctuation">.</span>nhid<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    weight<span class="token punctuation">.</span>new_zeros<span class="token punctuation">(</span>self<span class="token punctuation">.</span>nlayers<span class="token punctuation">,</span> bsz<span class="token punctuation">,</span> self<span class="token punctuation">.</span>nhid<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> weight<span class="token punctuation">.</span>new_zeros<span class="token punctuation">(</span>self<span class="token punctuation">.</span>nlayers<span class="token punctuation">,</span> bsz<span class="token punctuation">,</span> self<span class="token punctuation">.</span>nhid<span class="token punctuation">)</span>
+
+    <span class="token comment"># 这里只初始化了线性层decoder的参数</span>
+    <span class="token keyword">def</span> <span class="token function">init_weights</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        initrange <span class="token operator">=</span> <span class="token number">0.05</span>
+        self<span class="token punctuation">.</span>decoder<span class="token punctuation">.</span>bias<span class="token punctuation">.</span>data<span class="token punctuation">.</span>zero_<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>decoder<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>data<span class="token punctuation">.</span>uniform_<span class="token punctuation">(</span><span class="token operator">-</span>initrange<span class="token punctuation">,</span> initrange<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
                 
             </div>
             <hr/>
