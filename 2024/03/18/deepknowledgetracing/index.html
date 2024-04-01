@@ -359,7 +359,29 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>DKT核心代码是三个文件:”deep_knowledge_tracing_model.py“,”data.py”,”main.py”.</p>
+                <h1 id="DeepKnowledgeTracing"><a href="#DeepKnowledgeTracing" class="headerlink" title="DeepKnowledgeTracing"></a>DeepKnowledgeTracing</h1><p><img src="/2024/03/18/deepknowledgetracing/DKT.png" alt="Abstract"></p>
+<p>DeepKnowledgeTracing（DKT）是一种基于深度学习的模型，用于对学生的知识掌握情况进行建模和预测，可以通过分析学生的历史答题记录来推断他们的知识水平和学习进度。</p>
+<p>DKT的核心思想是利用递归神经网络（RNN）来捕捉学生的学习轨迹和知识状态的动态变化。模型接受学生的答题序列作为输入，并通过时间步的迭代来预测学生在下一个时间步的答题情况。通过不断地对学生的答题进行预测和比较，DKT可以逐渐调整模型的参数，提高对学生知识状态的准确预测能力。</p>
+<p>DKT的关键创新是引入了一个称为”学生知识状态向量”的概念，它用于表示学生在不同知识点上的掌握程度。该向量通过RNN中的记忆单元来维护和更新，从而捕捉学生的知识状态随时间的变化。通过将学生的答题序列与学生知识状态向量进行联合建模，DKT可以更准确地推断学生在不同知识点上的知识水平。</p>
+<p>使用DKT进行知识状态预测可以有助于教育领域的一些应用，例如个性化学习和智能辅导系统。通过对学生的知识状态进行建模和预测，教育者可以更好地了解学生的学习需求和困难，从而为他们提供个性化的学习支持和指导。</p>
+<p><img src="/2024/03/18/deepknowledgetracing/DKT1.png" alt="DKT优势"></p>
+<p><strong>新型的RNN输入编码，表现遥遥领先，无需专家注释，生成定制题库</strong></p>
+<p><img src="/2024/03/18/deepknowledgetracing/DKT2.png" alt="DKT训练测试"></p>
+<p>此模型的自我学习能力很强，可以根据做过的题目类型以及准确率来预测涉及某些知识点的答题情况，并不必需人工分类注释，很多功能类似的大模型在做数据分析时往往需要人工确定参数阈值，兼容性不够好。</p>
+<p><img src="/2024/03/18/deepknowledgetracing/DKT3.png" alt="RNN"></p>
+<p><img src="/2024/03/18/deepknowledgetracing/DKT6.png" alt="LSTM"></p>
+<p>RNN的LSTM所提供的长期记忆功能是其重要优势</p>
+<p><img src="/2024/03/18/deepknowledgetracing/DKT4.png" alt="RNN工作基本原理"></p>
+<p>在DeepKnowledgeTracing（DKT）模型中，one-hot编码用于表示学生的答题情况或知识点的状态。</p>
+<p>在one-hot编码中，对于一个具有N个可能取值的离散变量，将其编码为一个长度为N的二进制向量。向量中只有一个元素为1，表示当前取值，而其他元素都为0。这样的编码方式能够将每个离散取值映射到一个唯一的向量表示。在DKT中，one-hot编码用于表示学生的答题情况。假设有M个不同的题目，每个题目都有可能的答案选项（如A、B、C、D等）。那么，每个题目的答题情况可以使用一个长度为M的one-hot向量来表示。向量中只有对应学生选择的答案选项为1，其他选项均为0。</p>
+<p>类似地，DKT中的知识点状态也可以使用one-hot编码表示。如果有K个不同的知识点，那么每个知识点的状态可以使用一个长度为K的one-hot向量来表示。向量中只有对应知识点为当前学生所掌握的知识点时为1，其他知识点均为0。</p>
+<p>通过使用one-hot编码，DKT模型能够将离散的答题情况或知识点状态转换为可供神经网络处理的向量表示形式。这样的表示方式使得模型能够更好地处理离散数据，并进行相应的预测和推断。</p>
+<p><img src="/2024/03/18/deepknowledgetracing/DKT7.png" alt="输入输出"></p>
+<p><img src="/2024/03/18/deepknowledgetracing/DKT9.png" alt="输入"></p>
+<p><img src="/2024/03/18/deepknowledgetracing/DKT8.png" alt="输出"></p>
+<p><img src="/2024/03/18/deepknowledgetracing/DKT5.png" alt="DKT效果"></p>
+<p>DKT需要大量答题数据，对于线上的大规模教学更有帮助。</p>
+<p>DKT核心代码是三个文件:”deep_knowledge_tracing_model.py“,”data.py”,”main.py”.</p>
 <h2 id="”deep-knowledge-tracing-model-py“"><a href="#”deep-knowledge-tracing-model-py“" class="headerlink" title="”deep_knowledge_tracing_model.py“"></a>”deep_knowledge_tracing_model.py“</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
     <span class="token comment"># 导入PyTorch中的神经网络模块</span>
 <span class="token keyword">class</span> <span class="token class-name">DeepKnowledgeTracing</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -385,6 +407,7 @@
                 <span class="token comment">#类型不匹配报错</span>
             self<span class="token punctuation">.</span>rnn <span class="token operator">=</span> nn<span class="token punctuation">.</span>RNN<span class="token punctuation">(</span>input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> nlayers<span class="token punctuation">,</span> nonlinearity<span class="token operator">=</span>nonlinearity<span class="token punctuation">,</span> dropout<span class="token operator">=</span>dropout<span class="token punctuation">)</span>
         self<span class="token punctuation">.</span>decoder <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>hidden_size<span class="token punctuation">,</span> num_skills<span class="token punctuation">)</span>
+        <span class="token comment">#Decoder 是一个重要的组件，用于生成目标序列或标签。最简单的 Decoder 可能是一个基于循环神经网络（Recurrent Neural Network，RNN）的 Decoder。在这种情况下，Decoder 将上一个时间步的输出作为当前时间步的输入，并依次生成序列。常见的 RNN Decoder 包括基本的 RNN、长短期记忆网络（Long Short-Term Memory，LSTM）和门控循环单元（Gated Recurrent Unit，GRU）等。</span>
         <span class="token comment">#创建一个线性层作为解码器，将 RNN 的隐藏状态映射到技能数量上。</span>
         <span class="token comment"># input维度是(seq_size, batch_size, input_size)</span>
         <span class="token comment"># h0（初始隐藏状态）维度是(numLayers, batch_size, hidden_size)numLayers 表示 RNN 模型中的层数，即神经网络中堆叠的 RNN 层的数量。batch_size 表示每个时间步输入的样本数。hidden_size 表示每个隐藏层中的隐藏单元数。</span>
@@ -440,7 +463,9 @@
         initrange <span class="token operator">=</span> <span class="token number">0.05</span>
         self<span class="token punctuation">.</span>decoder<span class="token punctuation">.</span>bias<span class="token punctuation">.</span>data<span class="token punctuation">.</span>zero_<span class="token punctuation">(</span><span class="token punctuation">)</span>
         self<span class="token punctuation">.</span>decoder<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>data<span class="token punctuation">.</span>uniform_<span class="token punctuation">(</span><span class="token operator">-</span>initrange<span class="token punctuation">,</span> initrange<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 
 <h2 id="“data-py”"><a href="#“data-py”" class="headerlink" title="“data.py”"></a>“data.py”</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> csv 
 <span class="token comment"># 导入 CSV 模块，用于读取 CSV 文件。</span>
@@ -533,7 +558,7 @@ args <span class="token operator">=</span> parser<span class="token punctuation"
 <span class="token comment"># 解析命令行参数</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>args<span class="token punctuation">,</span> <span class="token builtin">file</span><span class="token operator">=</span>sys<span class="token punctuation">.</span>stderr<span class="token punctuation">)</span>
 <span class="token comment"># 将信息输出到标准错误流的好处在于，它可以与标准输出流分开，这意味着即使程序的标准输出被重定向到文件或管道中，错误信息仍然会显示在控制台上。这有助于用户更容易地注意到可能导致程序出错或异常的问题。在这个特定的情况下，当程序执行时，它会将 args 对象的值输出到标准错误流，这样在程序出现错误时，用户就可以看到程序的参数配置，有助于调试和定位问题。</span>
-<span class="token keyword">def</span> <span class="token function">add_gradient_noise</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> stddev<span class="token operator">=</span><span class="token number">1e-3</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token keyword">def</span> <span class="token function">add_gradient_noise</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> stddev<span class="token operator">=</span><span class="token number">1e-3</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment">#没用到</span>
     <span class="token comment"># 添加梯度噪声的函数，用于防止梯度爆炸。</span>
     <span class="token triple-quoted-string string">"""
     Adds gradient noise as described in http://arxiv.org/abs/1511.06807 [2].
@@ -550,6 +575,7 @@ args <span class="token operator">=</span> parser<span class="token punctuation"
 
 <span class="token keyword">def</span> <span class="token function">compute_acc</span><span class="token punctuation">(</span>all_target<span class="token punctuation">,</span> all_pred<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token comment"># all_pred = np.concatenate(pred_list, axis=0)</span>
+    <span class="token comment">#将 pred_list 中的所有元素按照指定的轴(axis)进行连接，生成一个新的 NumPy 数组 all_pred。    np.concatenate() 函数用于将数组沿着指定的轴连接起来。在这个例子中，axis=0 表示沿着第一个轴（通常是行） 进行连接，因此将 pred_list 中的所有数组按行连接起来，生成一个新的数组。</span>
     <span class="token comment"># all_target = np.concatenate(target_list, axis=0)</span>
     all_pred <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>all_pred<span class="token punctuation">)</span>
     <span class="token comment"># 概率分析，预测值>0.5就预测会做对，&lt;0.5就预测会做错</span>
@@ -608,12 +634,12 @@ args <span class="token operator">=</span> parser<span class="token punctuation"
                 x<span class="token punctuation">[</span>i<span class="token punctuation">,</span> j<span class="token punctuation">]</span> <span class="token operator">=</span> label_index
               <span class="token comment"># 问题编号是通过某种方式编码的标识符。在这段代码中，根据问题或技能的正确性，将其编号存储到 x 数组中。如果学生回答的问题或技能是正确的，则直接使用问题或技能的编号；如果是错误的，则使用问题或技能的编号加上技能数量（即 problem_id + num_skills）。这样的编码方式可能用于区分学生正确回答和错误回答的情况。</span>
             target_id<span class="token punctuation">.</span>append<span class="token punctuation">(</span>i<span class="token operator">*</span>num_steps<span class="token operator">*</span>num_skills<span class="token operator">+</span>j<span class="token operator">*</span>num_skills<span class="token operator">+</span><span class="token builtin">int</span><span class="token punctuation">(</span>problem_ids<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token comment">#这行代码用于构建目标ID列表 target_id 的一部分。在一个特定的序列预测问题中，通常会有一个目标（或标签）与每个输入相对应，以便模型进行预测和训练。具体来说，这行代码的作用是将当前问题的目标 ID 添加到 target_id 列表中。假设 i 表示当前样本（学生）的索引，j 表示当前问题在学生答题序列中的位置。在这个问题中，i * num_steps * num_skills 用于定位到当前学生在目标 ID 列表中的起始位置，而 j * num_skills 用于定位到当前问题对应的起始位置。然后，int(problem_ids[j + 1]) 表示当前问题的下一个问题的编号（或者可以理解为当前问题的答案），通过加上这个编号就可以得到当前问题的目标 ID。这个过程是为了构建训练过程中的目标数据，以便在训练模型时使用。目标 ID 是模型在训练时需要预测的真实值，模型会根据输入数据预测这些目标值，然后通过计算预测值与真实值之间的损失来进行参数更新。   </span>
                 target_correctness<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>correctness<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
                 actual_labels<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>correctness<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
         <span class="token comment"># 在这段代码中，x 是一个用于存储问题或技能编号的二维 NumPy 数组，用于构建模型的输入数据。具体来说，x 的形状是 (batch_size, num_steps)，其中 batch_size 是批处理大小，num_steps 是问题或技能序列的长度。</span>
         <span class="token comment"># 每一行代表一个学生的问题或技能序列，每一列代表序列中的一个时间步（即学生回答问题的顺序）。数组中的每个元素表示学生在特定时间步回答的问题或技能的编号。</span>
         <span class="token comment"># 在这段代码中，通过循环遍历每个学生，以及每个学生回答的问题或技能，并将问题或技能的编号填充到 x 数组中的相应位置。对于每个学生的每个问题或技能，将其编号填充到数组的对应位置，以构建表示问题或技能序列的二维数组。</span>
-        
         <span class="token comment"># x 数组用于存储学生的问题或技能序列的编号，是模型的输入数据之一，用于训练和测试深度知识追踪模型。       </span>
         <span class="token comment"># index指向下一组batch</span>
         index <span class="token operator">+=</span> batch_size
@@ -632,6 +658,8 @@ args <span class="token operator">=</span> parser<span class="token punctuation"
         input_data<span class="token punctuation">.</span>scatter_<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
 
         <span class="token keyword">if</span> training<span class="token punctuation">:</span>
+            <span class="token comment">#在训练模式下，模型的目标是通过学习从输入到输出的映射关系，最小化损失函数，使得模型的预测              尽可能接近真实值。</span>
+            <span class="token comment">#为了实现这一目标，我们通过计算损失函数来衡量模型预测与真实值之间的差异，并使用反向传播算              法来计算损失函数对模型参数的梯度.然后，利用这些梯度来更新模型的参数，以便不断优化模型，使              其在训练数据上的表现逐渐提升。</span>
             hidden <span class="token operator">=</span> repackage_hidden<span class="token punctuation">(</span>hidden<span class="token punctuation">)</span>
             <span class="token comment"># 将梯度初始化为零（因为一个batch的loss关于weight的导数是所有sample的loss关于weight的导数的累加和）</span>
             optimizer<span class="token punctuation">.</span>zero_grad<span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -659,7 +687,7 @@ args <span class="token operator">=</span> parser<span class="token punctuation"
             <span class="token comment"># total_loss += loss.item()</span>
             all_loss<span class="token punctuation">.</span>append<span class="token punctuation">(</span>loss<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
         <span class="token keyword">else</span><span class="token punctuation">:</span>
-            <span class="token comment"># 表明当前计算不需要反向传播，使用之后，强制后边的内容不进行计算图的构建</span>
+            <span class="token comment"># 后边的内容不进行计算图的构建,测试评估模型性能</span>
             <span class="token keyword">with</span> torch<span class="token punctuation">.</span>no_grad<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
                 m<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
                 output<span class="token punctuation">,</span> hidden <span class="token operator">=</span> m<span class="token punctuation">(</span>input_data<span class="token punctuation">,</span> hidden<span class="token punctuation">)</span>
@@ -726,9 +754,97 @@ args <span class="token operator">=</span> parser<span class="token punctuation"
 
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
     main<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h2 id="数据形式"><a href="#数据形式" class="headerlink" title="数据形式"></a>数据形式</h2><p>(题目信息)</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span><span class="token property">"RECORDS"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token property">"AnswerId"</span><span class="token operator">:</span> <span class="token string">"690384"</span><span class="token punctuation">,</span>
+        <span class="token property">"QuestionId"</span><span class="token operator">:</span> <span class="token string">"440"</span><span class="token punctuation">,</span>
+        <span class="token property">"UserId"</span><span class="token operator">:</span> <span class="token string">"0"</span><span class="token punctuation">,</span>
+        <span class="token property">"CorrectAnswer"</span><span class="token operator">:</span> <span class="token string">"2"</span><span class="token punctuation">,</span>
+        <span class="token property">"AnswerValue"</span><span class="token operator">:</span> <span class="token string">"2"</span><span class="token punctuation">,</span>
+        <span class="token property">"IsCorrect"</span><span class="token operator">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+        <span class="token property">"Context"</span><span class="token operator">:</span> <span class="token string">"What is the name of the mathematical instrument used to construct circles?"</span><span class="token punctuation">,</span>
+        <span class="token property">"Option_A"</span><span class="token operator">:</span> <span class="token string">"Callipers"</span><span class="token punctuation">,</span>
+        <span class="token property">"Option_B"</span><span class="token operator">:</span> <span class="token string">"Compass"</span><span class="token punctuation">,</span>
+        <span class="token property">"Option_C"</span><span class="token operator">:</span> <span class="token string">"Protractor"</span><span class="token punctuation">,</span>
+        <span class="token property">"Option_D"</span><span class="token operator">:</span> <span class="token string">"Slide rule"</span><span class="token punctuation">,</span>
+        <span class="token property">"GroupId"</span><span class="token operator">:</span> <span class="token string">"216"</span><span class="token punctuation">,</span>
+        <span class="token property">"QuizId"</span><span class="token operator">:</span> <span class="token string">"85"</span><span class="token punctuation">,</span>
+        <span class="token property">"SubjectId"</span><span class="token operator">:</span> <span class="token string">"[3, 71, 83, 190]"</span><span class="token punctuation">,</span>
+        <span class="token property">"DateAnswered"</span><span class="token operator">:</span> <span class="token string">"2020-04-17 13:38:00.000"</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token property">"AnswerId"</span><span class="token operator">:</span> <span class="token string">"1427450"</span><span class="token punctuation">,</span>
+        <span class="token property">"QuestionId"</span><span class="token operator">:</span> <span class="token string">"814"</span><span class="token punctuation">,</span>
+        <span class="token property">"UserId"</span><span class="token operator">:</span> <span class="token string">"0"</span><span class="token punctuation">,</span>
+        <span class="token property">"CorrectAnswer"</span><span class="token operator">:</span> <span class="token string">"4"</span><span class="token punctuation">,</span>
+        <span class="token property">"AnswerValue"</span><span class="token operator">:</span> <span class="token string">"4"</span><span class="token punctuation">,</span>
+        <span class="token property">"IsCorrect"</span><span class="token operator">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+        <span class="token property">"Context"</span><span class="token operator">:</span> <span class="token string">"Which of the following diagrams shows a diameter?"</span><span class="token punctuation">,</span>
+        <span class="token property">"Option_A"</span><span class="token operator">:</span> <span class="token string">"pic814_1_0"</span><span class="token punctuation">,</span>
+        <span class="token property">"Option_B"</span><span class="token operator">:</span> <span class="token string">"pic814_1_1"</span><span class="token punctuation">,</span>
+        <span class="token property">"Option_C"</span><span class="token operator">:</span> <span class="token string">"pic814_1_2"</span><span class="token punctuation">,</span>
+        <span class="token property">"Option_D"</span><span class="token operator">:</span> <span class="token string">"pic814_1_3"</span><span class="token punctuation">,</span>
+        <span class="token property">"GroupId"</span><span class="token operator">:</span> <span class="token string">"216"</span><span class="token punctuation">,</span>
+        <span class="token property">"QuizId"</span><span class="token operator">:</span> <span class="token string">"85"</span><span class="token punctuation">,</span>
+        <span class="token property">"SubjectId"</span><span class="token operator">:</span> <span class="token string">"[3, 71, 77, 184]"</span><span class="token punctuation">,</span>
+        <span class="token property">"DateAnswered"</span><span class="token operator">:</span> <span class="token string">"2020-04-17 13:39:00.000"</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    ...
+    ...
+    ...
+    <span class="token punctuation">&#123;</span>
+        <span class="token property">"AnswerId"</span><span class="token operator">:</span> <span class="token string">"860053"</span><span class="token punctuation">,</span>
+        <span class="token property">"QuestionId"</span><span class="token operator">:</span> <span class="token string">"933"</span><span class="token punctuation">,</span>
+        <span class="token property">"UserId"</span><span class="token operator">:</span> <span class="token string">"0"</span><span class="token punctuation">,</span>
+        <span class="token property">"CorrectAnswer"</span><span class="token operator">:</span> <span class="token string">"2"</span><span class="token punctuation">,</span>
+        <span class="token property">"AnswerValue"</span><span class="token operator">:</span> <span class="token string">"2"</span><span class="token punctuation">,</span>
+        <span class="token property">"IsCorrect"</span><span class="token operator">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+        <span class="token property">"Context"</span><span class="token operator">:</span> <span class="token string">"Jo and Paul are arguing about the red line drawn on the circle to the right. Jo says it is a chord. Paul says it is an arc. Who is correct? pic933_0"</span><span class="token punctuation">,</span>
+        <span class="token property">"Option_A"</span><span class="token operator">:</span> <span class="token string">"Only Jo"</span><span class="token punctuation">,</span>
+        <span class="token property">"Option_B"</span><span class="token operator">:</span> <span class="token string">"Only Paul"</span><span class="token punctuation">,</span>
+        <span class="token property">"Option_C"</span><span class="token operator">:</span> <span class="token string">"Both Jo and Paul"</span><span class="token punctuation">,</span>
+        <span class="token property">"Option_D"</span><span class="token operator">:</span> <span class="token string">"Neither is correct"</span><span class="token punctuation">,</span>
+        <span class="token property">"GroupId"</span><span class="token operator">:</span> <span class="token string">"216"</span><span class="token punctuation">,</span>
+        <span class="token property">"QuizId"</span><span class="token operator">:</span> <span class="token string">"85"</span><span class="token punctuation">,</span>
+        <span class="token property">"SubjectId"</span><span class="token operator">:</span> <span class="token string">"[3, 71, 77, 184]"</span><span class="token punctuation">,</span>
+        <span class="token property">"DateAnswered"</span><span class="token operator">:</span> <span class="token string">"2020-04-17 13:40:00.000"</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p>（学生答题情况）</p>
+<pre class="line-numbers language-none"><code class="language-none">27
+13,16,13,14,16,14,16,19,19,19,19,10,13,120,120,120,10,13,120,120,120,10,13,10,13,10,13
+0,0,0,0,1,0,1,1,1,1,1,0,0,0,1,0,0,0,1,0,1,1,1,1,1,1,1
+26
+56,78,6,6,6,6,6,2,2,11,11,11,11,11,11,30,35,30,30,30,30,35,11,11,70,70
+1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,0,1,1,1,1,1,0,0
+46
+45,45,45,45,45,45,45,45,89,89,89,89,89,89,89,45,45,45,45,45,45,89,89,89,89,89,89,89,89,89,89,89,89,89,89,89,89,89,89,89,89,89,89,89,89,89
+0,0,0,0,1,1,0,1,0,0,0,0,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1,1,0,0
+20
+74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74
+0,0,0,1,0,1,0,0,0,1,1,1,0,1,0,1,1,0,0,1
+20
+19,19,19,19,19,120,120,120,19,120,120,120,19,19,19,19,19,19,19,19
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+85
+4,11,56,43,2,2,81,81,81,81,71,71,71,71,71,73,56,78,2,46,45,119,119,119,119,119,46,45,46,45,46,45,46,46,45,71,71,71,71,19,19,19,17,119,119,119,18,17,119,119,119,17,119,119,18,17,19,119,19,10,19,119,119,19,19,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119
+1,1,1,1,1,1,0,1,1,1,0,0,0,0,0,1,1,1,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,0,0,1,1,1,1,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,1,0,1
+16
+0,14,0,14,0,14,0,14,0,14,0,14,0,16,0,14
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+5
+33,38,38,38,38
+1,1,1,0,1
+...
+...
+...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="感谢周老师和子威师姐！"><a href="#感谢周老师和子威师姐！" class="headerlink" title="感谢周老师和子威师姐！"></a>感谢周老师和子威师姐！</h3>
                 
             </div>
             <hr/>
@@ -872,29 +988,28 @@ args <span class="token operator">=</span> parser<span class="token punctuation"
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/03/18/deepknowledgetracing/">
+                <a href="/2024/03/23/bert/">
                     <div class="card-image">
                         
-                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/ioq.jpg" class="responsive-img" alt="DeepKnowledgeTracing">
+                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/ioq.jpg" class="responsive-img" alt="Bert">
                         
-                        <span class="card-title">DeepKnowledgeTracing</span>
+                        <span class="card-title">Bert</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            My first project——DKT
+                            bert模型的基本概念
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-18
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-23
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -903,7 +1018,6 @@ args <span class="token operator">=</span> parser<span class="token punctuation"
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
