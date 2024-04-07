@@ -363,7 +363,7 @@
             <div id="articleContent">
                 <h1 id="DeepLearning基本步骤"><a href="#DeepLearning基本步骤" class="headerlink" title="DeepLearning基本步骤"></a>DeepLearning基本步骤</h1><h3 id="我们需要一个可以解决问题的方案（函数）"><a href="#我们需要一个可以解决问题的方案（函数）" class="headerlink" title="我们需要一个可以解决问题的方案（函数）"></a><strong>我们需要一个可以解决问题的方案（函数）</strong></h3><h4 id="1-建立含未知参数的函数，函数的形式很重要，函数中参数的取值也很重要。"><a href="#1-建立含未知参数的函数，函数的形式很重要，函数中参数的取值也很重要。" class="headerlink" title="1.建立含未知参数的函数，函数的形式很重要，函数中参数的取值也很重要。"></a><strong>1.建立含未知参数的函数，函数的形式很重要，函数中参数的取值也很重要。</strong></h4><h4 id="2-定义变量Loss作为判断参数是否合理的依据（需要已有数据进行参考）。"><a href="#2-定义变量Loss作为判断参数是否合理的依据（需要已有数据进行参考）。" class="headerlink" title="2.定义变量Loss作为判断参数是否合理的依据（需要已有数据进行参考）。"></a><strong>2.定义变量Loss作为判断参数是否合理的依据（需要已有数据进行参考）。</strong></h4><p>$$<br>e&#x3D;|y-\hat{y}|或(y-\hat{y})^2,y是推测值，\hat{y}是真实值<br>$$</p>
 <p>​<br>$$<br>Loss: L&#x3D;1&#x2F;N\sum_{i&#x3D;1}^{n}e_n<br>$$</p>
-<h4 id="3-最优化参数（梯度下降法）"><a href="#3-最优化参数（梯度下降法）" class="headerlink" title="3.最优化参数（梯度下降法）"></a><strong>3.最优化参数（梯度下降法）</strong></h4><p>不断迭代使得Loss最小，或者规定最大迭代次数，得到参数值</p>
+<h4 id="3-最优化参数（梯度下降法）"><a href="#3-最优化参数（梯度下降法）" class="headerlink" title="3.最优化参数（梯度下降法）"></a><strong>3.最优化参数（梯度下降法）</strong></h4><p>不断迭代w的值使得Loss最小，或者规定最大迭代次数，得到最优的参数值w</p>
 <p><img src="/2024/03/04/deep-learning0/DL0-4.png" alt="梯度下降0"></p>
 <p><img src="/2024/03/04/deep-learning0/DL0-21.png" alt="梯度下降1"></p>
 <p><strong>以上三步就是Training(训练)</strong></p>

@@ -359,18 +359,53 @@
             <div id="articleContent">
                 <h1 id="Training-Neural-Networks"><a href="#Training-Neural-Networks" class="headerlink" title="Training Neural Networks"></a>Training Neural Networks</h1><h4 id="基本框架：Define-Neural-Network-，Loss-Function-，-Optimization-Algorithm"><a href="#基本框架：Define-Neural-Network-，Loss-Function-，-Optimization-Algorithm" class="headerlink" title="基本框架：Define Neural Network ，Loss Function ， Optimization Algorithm"></a>基本框架：Define Neural Network ，Loss Function ， Optimization Algorithm</h4><p>dataset和dataloader是最基础的数据载入模块</p>
 <p><img src="/2024/04/01/deep-learning1/DL0.png" alt="基本概念"></p>
-<p>在DKT模型里，dataset对应的是data.py+deep_knowledge_tracing_model.py，而dataloader对应main.py，主要对应其中run_epoch函数部分</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">load_data</span><span class="token punctuation">(</span>fileName<span class="token punctuation">)</span>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> csv
+<span class="token keyword">import</span> random
+<span class="token keyword">import</span> sys
 
-<span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> rnn_type<span class="token punctuation">,</span> input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> num_skills<span class="token punctuation">,</span> nlayers<span class="token punctuation">,</span> dropout<span class="token operator">=</span><span class="token number">0.6</span><span class="token punctuation">,</span> tie_weights<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token comment">#以上是参数名，实际上的self的基本成员变量是rnn_type,nhid,nlayers,其他的是自定义初始化的参数</span>
-        <span class="token comment">#nhid表示隐藏层的大小（或称为隐藏单元的数量）。隐藏层是神经网络中的一层，它对输入进行非线性变换，提取输入中的特征信息。隐藏层的大小决定了模型可以学习和表示的特征的复杂程度。更大的隐藏层可以提供更多的表示能力，但也会增加模型的复杂性和计算成本。</span>
-
-        <span class="token comment">#nlayers表示模型的层数，即隐藏层的数量。增加层数可以使模型更深，从而增加模型对输入的抽象能力和表示能力。每一层都可以学习不同级别的特征表示。然而，增加层数也会增加模型的参数量和计算成本，并可能导致过拟合问题。</span>
-        
-        <span class="token comment"># 重构8个字典属性</span>
-        <span class="token comment">#这是类的构造方法。它接受一些参数，包括循环神经网络的类型（rnn_type）、输入的大小（input_size）、隐藏层的大小（hidden_size）、技能数量（num_skills）、层数（nlayers）等。还有一些可选参数，如丢弃率（dropout）和是否共享参数权重（tie_weights）。</span>
-        <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">def</span> <span class="token function">load_data</span><span class="token punctuation">(</span>fileName<span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment"># 提示参数都要小写</span>
+    rows <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    max_skill_num <span class="token operator">=</span> <span class="token number">0</span>
+    max_num_problems <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token comment"># 将数据集存储到列表中</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>fileName<span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> csvfile<span class="token punctuation">:</span>
+        reader <span class="token operator">=</span> csv<span class="token punctuation">.</span>reader<span class="token punctuation">(</span>csvfile<span class="token punctuation">,</span> delimiter<span class="token operator">=</span><span class="token string">','</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> row <span class="token keyword">in</span> reader<span class="token punctuation">:</span>
+            rows<span class="token punctuation">.</span>append<span class="token punctuation">(</span>row<span class="token punctuation">)</span>
+    <span class="token comment">#rows = [['3'], ['4', '5', '6'], ['1', '0', '1'],['2'],['14','12'],['0','0']]</span>
+    <span class="token comment">#rows中的每一个元素就是原来的每一行数据</span>
+    index <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"the number of rows is "</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>rows<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">file</span><span class="token operator">=</span>sys<span class="token punctuation">.</span>stderr<span class="token punctuation">)</span>
+    tuple_rows <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token comment"># turn list to tuple 每3个row作为1个tuple</span>
+    <span class="token keyword">while</span> index <span class="token operator">&lt;</span> <span class="token builtin">len</span><span class="token punctuation">(</span>rows<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span>
+        problems_num <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>rows<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token comment"># 找出每个tuple第2行的最大数值作为最大技能编号</span>
+        tmp_max_skill <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> rows<span class="token punctuation">[</span>index<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment">#直接用max函数提取第2行的最大技能编号</span>
+        <span class="token keyword">if</span> tmp_max_skill <span class="token operator">></span> max_skill_num<span class="token punctuation">:</span>
+            max_skill_num <span class="token operator">=</span> tmp_max_skill
+        <span class="token comment"># 去除问题回答数量小于2的学生数据</span>
+        <span class="token keyword">if</span> problems_num <span class="token operator">&lt;=</span> <span class="token number">2</span><span class="token punctuation">:</span>
+            index <span class="token operator">+=</span> <span class="token number">3</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token comment"># 找出所有学生回答问题数量的最大值</span>
+            <span class="token keyword">if</span> problems_num <span class="token operator">></span> max_num_problems<span class="token punctuation">:</span>
+                max_num_problems <span class="token operator">=</span> problems_num
+            <span class="token comment"># tup即每个学生的三元组</span>
+            tup <span class="token operator">=</span> <span class="token punctuation">(</span>rows<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">,</span> rows<span class="token punctuation">[</span>index<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> rows<span class="token punctuation">[</span>index<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token comment"># tuple_rows即所有学生的三元组</span>
+            tuple_rows<span class="token punctuation">.</span>append<span class="token punctuation">(</span>tup<span class="token punctuation">)</span>
+            index <span class="token operator">+=</span> <span class="token number">3</span>
+    <span class="token comment"># shuffle the tuple</span>
+    random<span class="token punctuation">.</span>shuffle<span class="token punctuation">(</span>tuple_rows<span class="token punctuation">)</span>  <span class="token comment"># 打乱原元祖的顺序</span>
+    <span class="token comment"># 也就是输出过滤后的学生数量</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The number of students is "</span><span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">(</span>tuple_rows<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">file</span><span class="token operator">=</span>sys<span class="token punctuation">.</span>stderr<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Finish reading data"</span><span class="token punctuation">,</span> <span class="token builtin">file</span><span class="token operator">=</span>sys<span class="token punctuation">.</span>stderr<span class="token punctuation">)</span>
+    <span class="token comment"># 技能编号从0开始 故返回技能个数需要+1</span>
+    <span class="token keyword">return</span> tuple_rows<span class="token punctuation">,</span> max_num_problems<span class="token punctuation">,</span> max_skill_num<span class="token operator">+</span><span class="token number">1</span>
+    <span class="token comment">#tuple_rows[ [['3'],['12','14','9'],['1','0','0']], [['2'],['6','7'],['1','0']], [['4'],['13','2','25','35'],['0','1','1','0']] ]</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="/2024/04/01/deep-learning1/DL1.png" alt="Dataset和Dataloader的基本概念"></p>
 <p>Dataloader会呼叫dataset(batch_size)次，得到(batch_size)笔资料后，将这些资料汇总成一个batch,再去做后续的训练</p>
@@ -405,35 +440,200 @@
 <p><strong>device（可选）：</strong>指定张量所在的设备。可以是’cpu’表示CPU、’cuda’表示CUDA设备，也可以是特定的设备对象。默认情况下，张量将被放置在CPU上。</p>
 <p><strong>requires_grad（可选）：</strong>指定是否计算张量的梯度。默认为False，表示不计算梯度。当需要进行自动微分和反向传播时，可以将其设置为True，以便在张量上跟踪梯度信息。</p>
 <p><strong>pin_memory（可选）：</strong>指定是否将张量数据固定在内存中，以便更快地从CPU上传输到GPU。默认为False。这对于使用GPU加速训练的情况下，处理大型数据集时可能会提高性能。   </p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">     
-target_id <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>target_id<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>int64<span class="token punctuation">)</span>
-<span class="token comment">#将target_id转换为PyTorch张量对象，并指定数据类型为torch.int64，即64位整数类型。</span>
-<span class="token comment">#上文中定义target_id: List[int] = []，说明target_id是整数列表</span>
-target_correctness <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>target_correctness<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span><span class="token builtin">float</span><span class="token punctuation">)</span>
-<span class="token comment"># One Hot encoding input data [batch_size, num_steps, input_size]</span>
-<span class="token comment"># x代表每个学生回答每个问题的正误情况</span>
-x <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>x<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>int64<span class="token punctuation">)</span>
-<span class="token comment"># unsqueeze:扩充数据维度，在0起的指定位置N加上维数为一的维度，这里的x本来是两维，现在变为3维</span>
-x <span class="token operator">=</span> torch<span class="token punctuation">.</span>unsqueeze<span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-input_data <span class="token operator">=</span> torch<span class="token punctuation">.</span>FloatTensor<span class="token punctuation">(</span>batch_size<span class="token punctuation">,</span> num_steps<span class="token punctuation">,</span> input_size<span class="token punctuation">)</span>
-input_data<span class="token punctuation">.</span>zero_<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token comment"># 在input_data的第三维找到x中所记录的位置，并将之修改为1,one-hot编码转换</span>
-input_data<span class="token punctuation">.</span>scatter_<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="张量运算是pytorch处理数据的基本方式"><a href="#张量运算是pytorch处理数据的基本方式" class="headerlink" title="张量运算是pytorch处理数据的基本方式"></a>张量运算是pytorch处理数据的基本方式</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">run_epoch</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> optimizer<span class="token punctuation">,</span> students<span class="token punctuation">,</span> batch_size<span class="token punctuation">,</span> num_steps<span class="token punctuation">,</span> num_skills<span class="token punctuation">,</span> training<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> epoch<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""Runs the model on the given data."""</span>
+    <span class="token comment"># lr = args.learning_rate  # learning rate</span>
+    total_loss <span class="token operator">=</span> <span class="token number">0</span>
+    input_size <span class="token operator">=</span> num_skills <span class="token operator">*</span> <span class="token number">2</span>
+    <span class="token comment"># start_time = time.time()</span>
+    index <span class="token operator">=</span> <span class="token number">0</span>
+    actual_labels <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>  <span class="token comment"># 真实值</span>
+    pred_labels <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>  <span class="token comment"># 预测值</span>
+    hidden <span class="token operator">=</span> m<span class="token punctuation">.</span>init_hidden<span class="token punctuation">(</span>batch_size<span class="token punctuation">)</span>
+    count <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token comment"># 计算需要进行多少次batch</span>
+    batch_num <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>students<span class="token punctuation">)</span> <span class="token operator">//</span> batch_size
+    <span class="token comment"># 最后一组的学生数量可能不到batch_size的大小，用小于号防止越界</span>
+    all_loss<span class="token punctuation">,</span> all_auc<span class="token punctuation">,</span> all_acc<span class="token punctuation">,</span> all_rmse<span class="token punctuation">,</span> all_r2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">while</span> index<span class="token operator">+</span>batch_size <span class="token operator">&lt;</span> <span class="token builtin">len</span><span class="token punctuation">(</span>students<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        x <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>batch_size<span class="token punctuation">,</span> num_steps<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># 比如32*128,初始化预测用的数组，x是一个二维张量，batch_size是一个初始化的量，表示的是一个batch中的学生数量，而num_steps是学生所能回答的最多的问题数量，num_skills是学生回答的最大问题编号</span>
+        target_id<span class="token punctuation">:</span> List<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        target_correctness <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># 对每一组batch进行操作</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>batch_size<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment">#它一次循环32个元组中的基本元素，即32个学生</span>
+            <span class="token comment"># 可以看作是锁定每个3元组</span>
+            <span class="token comment"># students[ [['3'],['12','14','9'],['1','0','0']], [['2'],['6','7'],['1','0']], [['4'],['13','2','25','35'],['0','1','1','0']] ]</span>
+            student <span class="token operator">=</span> students<span class="token punctuation">[</span>index<span class="token operator">+</span>i<span class="token punctuation">]</span>
+            <span class="token comment"># 每个3元组的第二行-回答的技能编号</span>
+            problem_ids <span class="token operator">=</span> student<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token comment">#这里的problem_ids是包含了该学生写过的所有题目编号的数组</span>
+            <span class="token comment"># 每个3元组的第三行-回答的正误</span>
+            correctness <span class="token operator">=</span> student<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token comment">#这里的correctness也是数组</span>
+            <span class="token comment"># a = torch.range(1, 6) a的tensor中是存在6的，也就是右区间是闭的</span>
+            <span class="token comment"># 每一个学生</span>
+            <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>problem_ids<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment">#这里的j就是学生i回答的第j道题目</span>
+                problem_id <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>problem_ids<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                <span class="token comment"># label_index = 0</span>
+                <span class="token keyword">if</span> <span class="token builtin">int</span><span class="token punctuation">(</span>correctness<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span><span class="token comment">#错题</span>
+                    label_index <span class="token operator">=</span> problem_id  
+                    <span class="token comment">#这个problem_index是错题的编号</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                    label_index <span class="token operator">=</span> problem_id <span class="token operator">+</span> num_skills 
+                    <span class="token comment">#正确的话题目下标会加上一个偏移值，</span>
+                    <span class="token comment">#input_size维度是num_skills*2的原因，但是为什么要这么做呢，为什么一定要用这种加上偏移值的方式来区别题目的对错呢，1/0不就可以表示对错了吗？可能是因为把值设为0的话，张量的某些维度是初始为0的，这些维度根本没有训练过题目，如果说通过加上偏移量来表示答题情况的话，1所在的位置一定是训练过的。</span>
+                x<span class="token punctuation">[</span>i<span class="token punctuation">,</span> j<span class="token punctuation">]</span> <span class="token operator">=</span> label_index   <span class="token comment">#把x第i行，第j列的值设置成label_index</span>
+                               target_id<span class="token punctuation">.</span>append<span class="token punctuation">(</span>i<span class="token operator">*</span>num_steps<span class="token operator">*</span>num_skills<span class="token operator">+</span>j<span class="token operator">*</span>num_skills<span class="token operator">+</span><span class="token builtin">int</span><span class="token punctuation">(</span>problem_ids<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token comment">#对于第i位同学写的第j道题生成一个地址</span>
+                target_correctness<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>correctness<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">#这里是获得下一个问题的回答情况</span>
+                actual_labels<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>correctness<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># index指向下一组batch</span>
+        index <span class="token operator">+=</span> batch_size  <span class="token comment">#步长为32</span>
+        count <span class="token operator">+=</span> <span class="token number">1</span>
+        <span class="token comment"># 将得到的这个batch中学生的所有所答题目以及对这些题目的回答情况做一个张量的转化</span>
+        target_id <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>target_id<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>int64<span class="token punctuation">)</span>
+        target_correctness <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>target_correctness<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span><span class="token builtin">float</span><span class="token punctuation">)</span>
 
+        <span class="token comment"># One Hot encoding input data [batch_size, num_steps, input_size]</span>
+        <span class="token comment"># x代表每个学生回答每个问题的正误情况</span>
+        x <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>x<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>int64<span class="token punctuation">)</span>
+        <span class="token comment"># 对于每一个学生回答的</span>
+        <span class="token comment"># 把二维数组转化成张量形式</span>
+        <span class="token comment"># unsqueeze:扩充数据维度，在0起的指定位置N加上维数为一的维度，这里的x本来是两维，现在变为3维</span>
+        x <span class="token operator">=</span> torch<span class="token punctuation">.</span>unsqueeze<span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        input_data <span class="token operator">=</span> torch<span class="token punctuation">.</span>FloatTensor<span class="token punctuation">(</span>batch_size<span class="token punctuation">,</span> num_steps<span class="token punctuation">,</span> input_size<span class="token punctuation">)</span>
+        <span class="token comment"># 创建一个每一维度分别是batch_size,num_size,input_size的三维张量</span>
+        input_data<span class="token punctuation">.</span>zero_<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment"># 在input_data的第三维找到x中所记录的位置，并将之修改为1</span>
+        input_data<span class="token punctuation">.</span>scatter_<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token comment">#input_data前两维和x一样，最后一维是前两维下标（第i个学生做的第j道题目的编号（正确的话是编号+偏移量，错误的话就是编号本身））</span>
+        <span class="token comment">#input_data[i][j][x[i][j][k]]=1</span>
+        <span class="token comment">#可以从这里的one-hot编码值中信息是：是i同学做的第j道题目，这道题目的编号可以从x[i][j][k]得知，还可以知道此题有没有写对</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/2024/04/01/deep-learning1/DL19.png" alt="DL19"></p>
 <p>Pytorch定义神经网络</p>
 <p><img src="/2024/04/01/deep-learning1/DL8.png" alt="DL8"></p>
 <p><img src="/2024/04/01/deep-learning1/DL9.png" alt="DL9"></p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
-<span class="token keyword">class</span> <span class="token class-name">DeepKnowledgeTracing</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
-<span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> rnn_type<span class="token punctuation">,</span> input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> num_skills<span class="token punctuation">,</span> nlayers<span class="token punctuation">,</span> dropout<span class="token operator">=</span><span class="token number">0.6</span><span class="token punctuation">,</span> tie_weights<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-self<span class="token punctuation">.</span>decoder <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>hidden_size<span class="token punctuation">,</span> num_skills<span class="token punctuation">)</span>
-parser<span class="token punctuation">.</span>add_argument<span class="token punctuation">(</span><span class="token string">'-hidden_size'</span><span class="token punctuation">,</span> <span class="token builtin">type</span><span class="token operator">=</span><span class="token builtin">int</span><span class="token punctuation">,</span> default<span class="token operator">=</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token builtin">help</span><span class="token operator">=</span><span class="token string">'The number of hidden nodes'</span><span class="token punctuation">)</span>
-num_skills <span class="token operator">=</span> train_max_skill_num
-model <span class="token operator">=</span> DeepKnowledgeTracing<span class="token punctuation">(</span><span class="token string">'LSTM'</span><span class="token punctuation">,</span> num_skills<span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">,</span> args<span class="token punctuation">.</span>hidden_size<span class="token punctuation">,</span> num_skills<span class="token punctuation">,</span> num_layers<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><img src="/2024/04/01/deep-learning1/DL10.png" alt="DL10"></p>
 <p>x是输入，y是输出</p>
+<p><img src="/2024/04/01/deep-learning1/DL11.png" alt="DL11"></p>
+<p>基本的神经网络模型构建框架</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
+
+<span class="token keyword">class</span> <span class="token class-name">DeepKnowledgeTracing</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""Deep Knowledge tracing model"""</span>
+
+    <span class="token comment"># 构造方法 tie_weights是参数共享的意思</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> rnn_type<span class="token punctuation">,</span> input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> num_skills<span class="token punctuation">,</span> nlayers<span class="token punctuation">,</span> dropout<span class="token operator">=</span><span class="token number">0.6</span><span class="token punctuation">,</span> tie_weights<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 重构8个字典属性</span>
+        <span class="token comment">#self的基本成员变量是rnn_type,nhid,nlayers,其他的是自定义初始化的参数</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>DeepKnowledgeTracing<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>decoder <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>hidden_size<span class="token punctuation">,</span> num_skills<span class="token punctuation">)</span>
+        <span class="token comment"># 创建一个线性层，将输入的特征维度hidden_size映射到输出的特征维度num_skills,hidden_size是RNN的隐藏状态维度，num_skills是最终输出的特征维度</span>
+        self<span class="token punctuation">.</span>init_weights<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>rnn_type <span class="token operator">=</span> rnn_type
+        self<span class="token punctuation">.</span>nhid <span class="token operator">=</span> hidden_size
+        self<span class="token punctuation">.</span>nlayers <span class="token operator">=</span> nlayers
+
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> inputs<span class="token punctuation">,</span> hidden<span class="token punctuation">)</span><span class="token punctuation">:</span> 
+        <span class="token comment"># 对每一个batch做运算</span>
+        output<span class="token punctuation">,</span> hidden <span class="token operator">=</span> self<span class="token punctuation">.</span>rnn<span class="token punctuation">(</span>inputs<span class="token punctuation">,</span> hidden<span class="token punctuation">)</span>
+        <span class="token comment"># output维度(seq_size, batch_size, hidden_size)</span>
+        <span class="token comment"># output的最后一维是hidden_size，经过nn.Linear的计算可以将decoded最后一个维度变成num_skills</span>
+        decoded <span class="token operator">=</span> self<span class="token punctuation">.</span>decoder<span class="token punctuation">(</span>output<span class="token punctuation">.</span>contiguous<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>view<span class="token punctuation">(</span>output<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">*</span> output<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> output<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment">#最终返回的张量的最后一个维度是num_skills</span>
+        <span class="token keyword">return</span> decoded<span class="token punctuation">,</span> hidden
+
+    <span class="token comment"># 这里只初始化了每个cell中的h和c</span>
+    <span class="token keyword">def</span> <span class="token function">init_hidden</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> bsz<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 每一隐层参数</span>
+        weight <span class="token operator">=</span> <span class="token builtin">next</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># 如果是LSTM的话还需要c</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>rnn_type <span class="token operator">==</span> <span class="token string">'LSTM'</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token punctuation">(</span>weight<span class="token punctuation">.</span>new_zeros<span class="token punctuation">(</span>self<span class="token punctuation">.</span>nlayers<span class="token punctuation">,</span> bsz<span class="token punctuation">,</span> self<span class="token punctuation">.</span>nhid<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    weight<span class="token punctuation">.</span>new_zeros<span class="token punctuation">(</span>self<span class="token punctuation">.</span>nlayers<span class="token punctuation">,</span> bsz<span class="token punctuation">,</span> self<span class="token punctuation">.</span>nhid<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> weight<span class="token punctuation">.</span>new_zeros<span class="token punctuation">(</span>self<span class="token punctuation">.</span>nlayers<span class="token punctuation">,</span> bsz<span class="token punctuation">,</span> self<span class="token punctuation">.</span>nhid<span class="token punctuation">)</span>
+
+    <span class="token comment"># 这里只初始化了线性层decoder的参数</span>
+    <span class="token keyword">def</span> <span class="token function">init_weights</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        initrange <span class="token operator">=</span> <span class="token number">0.05</span>
+        self<span class="token punctuation">.</span>decoder<span class="token punctuation">.</span>bias<span class="token punctuation">.</span>data<span class="token punctuation">.</span>zero_<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>decoder<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>data<span class="token punctuation">.</span>uniform_<span class="token punctuation">(</span><span class="token operator">-</span>initrange<span class="token punctuation">,</span> initrange<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/2024/04/01/deep-learning1/DL12.png" alt="DL12"></p>
+<p>常见的计算loss的函数</p>
+<p><img src="/2024/04/01/deep-learning1/DL13.png" alt="DL13"></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">criterion <span class="token operator">=</span> nn<span class="token punctuation">.</span>BCEWithLogitsLoss<span class="token punctuation">(</span><span class="token punctuation">)</span>
+loss <span class="token operator">=</span> criterion<span class="token punctuation">(</span>logits<span class="token punctuation">,</span> target_correctness<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/2024/04/01/deep-learning1/DL14.png" alt="DL14"></p>
+<p><img src="/2024/04/01/deep-learning1/DL15.png" alt="DL15"></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">loss<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment"># clip_grad_norm` helps prevent the exploding gradient problem in RNNs / LSTMs.</span>
+<span class="token comment"># max_norm越小，裁剪的梯度越大，得到的梯度就越小，防止梯度爆炸的效果越明显</span>
+torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>clip_grad_norm_<span class="token punctuation">(</span>m<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> args<span class="token punctuation">.</span>max_grad_norm<span class="token punctuation">)</span>
+optimizer<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>神经网络的基本训练框架</p>
+<p><img src="/2024/04/01/deep-learning1/DL16.png" alt="DL16"></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> training<span class="token punctuation">:</span>
+    <span class="token comment">#将隐藏状态与计算图的历史分离，防止梯度的累计</span>
+    hidden <span class="token operator">=</span> repackage_hidden<span class="token punctuation">(</span>hidden<span class="token punctuation">)</span>
+    <span class="token comment"># 将梯度初始化为零（因为一个batch的loss关于weight的导数是所有sample的loss关于weight的导数的累加和）</span>
+    optimizer<span class="token punctuation">.</span>zero_grad<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment"># 调用了forward函数</span>
+    output<span class="token punctuation">,</span> hidden <span class="token operator">=</span> m<span class="token punctuation">(</span>input_data<span class="token punctuation">,</span> hidden<span class="token punctuation">)</span>
+    <span class="token comment"># Get prediction results from output </span>
+    <span class="token comment"># 将output转成1维</span>
+    output <span class="token operator">=</span> output<span class="token punctuation">.</span>contiguous<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>view<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token comment"># 从output的特定位置取值，具体位置由target_id给出，得到对于做过题目的预测值</span>
+    logits <span class="token operator">=</span> torch<span class="token punctuation">.</span>gather<span class="token punctuation">(</span>output<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> target_id<span class="token punctuation">)</span>
+    <span class="token comment"># preds 使用sigmod函数</span>
+    preds <span class="token operator">=</span> torch<span class="token punctuation">.</span>sigmoid<span class="token punctuation">(</span>logits<span class="token punctuation">)</span>
+    <span class="token comment"># 在浮点数结果上使用 .item() 函数可以提高显示精度</span>
+    <span class="token keyword">for</span> p <span class="token keyword">in</span> preds<span class="token punctuation">:</span>
+        pred_labels<span class="token punctuation">.</span>append<span class="token punctuation">(</span>p<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment"># 记录预测结果</span>
+    <span class="token comment"># criterion = nn.CrossEntropyLoss()</span>
+    <span class="token comment"># sigmoid+BCEloss</span>
+    <span class="token comment"># softmax+CrossEntropyLoss</span>
+    criterion <span class="token operator">=</span> nn<span class="token punctuation">.</span>BCEWithLogitsLoss<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    loss <span class="token operator">=</span> criterion<span class="token punctuation">(</span>logits<span class="token punctuation">,</span> target_correctness<span class="token punctuation">)</span>
+    <span class="token comment">#比较logits中的预测值和真实值间的差别，得到评估性能的loss</span>
+    loss<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment"># 将梯度计算的结果传回模型的每一个参数，以便更新参数时根据梯度的方向进行调整</span>
+    <span class="token comment"># `clip_grad_norm` helps prevent the exploding gradient problem in RNNs / LSTMs.</span>
+    <span class="token comment"># max_norm越小，裁剪的梯度越大，得到的梯度就越小，防止梯度爆炸的效果越明显</span>
+    torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>clip_grad_norm_<span class="token punctuation">(</span>m<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> args<span class="token punctuation">.</span>max_grad_norm<span class="token punctuation">)</span>
+    <span class="token comment">#调整模型参数   </span>
+    optimizer<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment"># total_loss += loss.item()</span>
+    all_loss<span class="token punctuation">.</span>append<span class="token punctuation">(</span>loss<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/2024/04/01/deep-learning1/DL20.png" alt="DL20"></p>
+<p>测试框架关闭了梯度计算，有些神经网络模型的训练和测试模式差别很大</p>
+<p><img src="/2024/04/01/deep-learning1/DL17.png" alt="DL17"></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">else</span><span class="token punctuation">:</span>
+    <span class="token comment"># 表明当前计算不需要反向传播，使用之后，强制后边的内容不进行计算图的构建</span>
+    <span class="token keyword">with</span> torch<span class="token punctuation">.</span>no_grad<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        m<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        output<span class="token punctuation">,</span> hidden <span class="token operator">=</span> m<span class="token punctuation">(</span>input_data<span class="token punctuation">,</span> hidden<span class="token punctuation">)</span>
+        output <span class="token operator">=</span> output<span class="token punctuation">.</span>contiguous<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>view<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        logits <span class="token operator">=</span> torch<span class="token punctuation">.</span>gather<span class="token punctuation">(</span>output<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> target_id<span class="token punctuation">)</span>
+        <span class="token comment"># preds</span>
+        preds <span class="token operator">=</span> torch<span class="token punctuation">.</span>sigmoid<span class="token punctuation">(</span>logits<span class="token punctuation">)</span>
+        <span class="token comment"># pred_labels用于后面计算rmse</span>
+        <span class="token keyword">for</span> p <span class="token keyword">in</span> preds<span class="token punctuation">:</span>
+            pred_labels<span class="token punctuation">.</span>append<span class="token punctuation">(</span>p<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># criterion = nn.CrossEntropyLoss()</span>
+        criterion <span class="token operator">=</span> nn<span class="token punctuation">.</span>BCEWithLogitsLoss<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        loss <span class="token operator">=</span> criterion<span class="token punctuation">(</span>logits<span class="token punctuation">,</span> target_correctness<span class="token punctuation">)</span>
+        <span class="token comment"># total_loss += loss.item()</span>
+        all_loss<span class="token punctuation">.</span>append<span class="token punctuation">(</span>loss<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        hidden <span class="token operator">=</span> repackage_hidden<span class="token punctuation">(</span>hidden<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>真正的测试，不给y，得出的预测概率</p>
+<p><img src="/2024/04/01/deep-learning1/DL18.png" alt="DL18"></p>
 
                 
             </div>
