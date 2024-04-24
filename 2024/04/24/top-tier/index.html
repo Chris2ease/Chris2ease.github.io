@@ -390,6 +390,19 @@
 <li><strong>分辨率</strong>：转换过程中可能无意间增加了GIF的分辨率，或者来自MP4的高分辨率视频在转换为GIF时没有适当的缩减分辨率，导致文件体积的增加。</li>
 <li><strong>循环播放</strong>：GIF经常被设置为无限循环，如果转换时包含了整个视频的多次循环，文件大小也会相应增加。</li>
 </ol>
+<p>emm…<br>本来不必上传这个动图到git仓库的（直接从我云床上读取），我还是上传了，结果这个太大的文件（244MB超过了github支持的极限100MB）卡在历史提交记录中把网站维护的通道堵住了，我只好尝试下载git-filter-repo来删除历史记录，搞了半天，装好了文件，环境变量也没有问题，就是无法识别git-filter-repo,只好去看原文档，原来windows用户要把git-filter-repo文件的第一行中的python3修改为python才可以被环境识别。是shebang的问题</p>
+<p>Shebang（也称为 hashbang、pound bang 或者 bang line）是由一串特殊字符组成的字符序列，在Unix和类Unix操作系统中，它用于在文本文件的第一行告诉系统如何执行该文件中的脚本。通常，一个shebang行看起来像这样：</p>
+<pre class="line-numbers language-none"><code class="language-none">bash复制#!&#x2F;bin&#x2F;bash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>或者</p>
+<pre class="line-numbers language-none"><code class="language-none">bash复制#!&#x2F;usr&#x2F;bin&#x2F;env python<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这里的 <code>#!</code> 是shebang的实际标记，后面跟着的路径指向了用于解释脚本其余部分的解释器。在第一个例子中，<code>/bin/bash</code> 指的是Bash shell的路径，这意味着该文件应该用Bash来执行。在第二个例子中，<code>/usr/bin/env</code> 是一个常见的Unix程序，它用于在系统的环境中查找 <code>python</code> 解释器，并使用第一个找到的 <code>python</code> 程序来执行脚本。</p>
+<p>Shebang行一定要出现在脚本文件的第一行，而且其前面不能有任何其他字符。当执行标有shebang的脚本文件时，操作系统会解析shebang行，然后使用指定的解释器来运行脚本中的代码。</p>
+<p>例如，如果你有一个名为 <code>script.sh</code> 的文件，并且第一行是 <code>#!/bin/bash</code>，当你在Unix上运行这个脚本时（通过将其作为命令输入或者点击它），系统会调用 <code>/bin/bash</code> 来执行脚本中的命令。</p>
+<p>这种机制允许相同的脚本文件在不同的系统中使用不同的解释器，而不需要更改脚本内容，只需要确保shebang行指向正确的解释器路径。可以提高代码的复用性</p>
+<p>一旦删除了历史记录就好像真的没有提交过似的，（江南你最好记得楚子航）它要求操作者确认风险以及可能带来的严重后果</p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/git_filter_repo.png" alt="git-filter-repo可以篡改历史"></p>
 
                 
             </div>
