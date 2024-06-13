@@ -368,7 +368,7 @@
             <div id="articleContent">
                 <h1 id="CLIP"><a href="#CLIP" class="headerlink" title="CLIP"></a>CLIP</h1><p>CLIP是由openAI推出的用于图片分类、目标检测的图像+文本多模态预训练模型</p>
 <p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP_model.png" alt="CLIP模型总览图"></p>
-<p>**CLIP预训练方法:**使用配对的图片文字集（pairs）作为输入，图片和文本分别通过图像编码器和文本编码器得到图片和文本各自的一些特征，每一个training batch中都有n个图片文本对，就得到n个图片特征和n个文本特征，CLIP在这些特征上做对比学习，将特征矩阵对角线上的张量积为正样本，其他的全为负样本，无需手工标注，实现了无监督的预训练方式。这种训练所需要的数据量是庞大的，这里openAI收集了4亿个图片文本对，使得CLIP异常强大。</p>
+<p>**CLIP预训练方法: ** 使用配对的图片文字集（pairs）作为输入，图片和文本分别通过图像编码器和文本编码器得到图片和文本各自的一些特征，每一个training batch中都有n个图片文本对，就得到n个图片特征和n个文本特征，CLIP在这些特征上做对比学习，将特征矩阵对角线上的张量积为正样本，其他的全为负样本，无需手工标注，实现了无监督的预训练方式。这种训练所需要的数据量是庞大的，这里openAI收集了4亿个图片文本对，使得CLIP异常强大。</p>
 <p><strong>zero-shot预测：</strong>将感兴趣的图片和文本放入训练好的图像编码器和文本编码器中进行特征提取，模型就会计算出图片和各个文本的相似度，从而选择出与图片最相近的文本。CLIP不像之前的CV模型具有严格的分类头（categorical label），它具有zero-shot能力，其标签是可以人为输入的，这是CLIP的创新之处。由于CLIP在训练时将视觉语义和文字语义联系起来了，所以它学到的特征的语义性很强，迁移效果好。</p>
 <p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP_blog.png" alt="CLIP强大的zero-shot能力"></p>
 <p>训练时使用固定标签分类头的传统模型其迁移效果不佳，特别是对于抽象噪音多的图片识别准确率大幅度下降</p>
@@ -414,7 +414,7 @@
 <p>few-shot确实可以提高CLIP的准确率，在训练样本数少时，CLIP的few-shot表现还不如zero-shot，但是随着训练样本的增多，few-shot的CLIP完全可以超过其本身的zero-shot表现，在处理较难的数据集时，最好还是使用few-shot提高模型准确度，但这有失CLIP的本意。</p>
 <p>既然说了zero-shot和few-shot，那么作者就又讲讲下游任务上用全部的数据所得到的结果，一般使用Linear probe和fine tune这两种方法来衡量模型学到的特征好坏。</p>
 <p>Linear probe是把预训练好的模型冻住，再在上面训练一个分类头，而Fine tune是把整个网络放开，做端到端的学习。Fine tune比较灵活，在下游数据集比较大的时候效果比Linear probe好很多，但是作者使用的是Linear probe。一是因为微调会改变模型参数，可能将原本不好的模型调整好，而Linear probe可以更准确的反映出预训练模型的好坏。二是因为微调需要调参，CLIP模型很大，要微调的超参和设计方案太多了，微调需要对于每一个下游数据集调整参数，Linear probe就只是抽特征学最后一层分类层，相对于微调来说大大简化了流程。</p>
-<p><img src="/2024/06/04/clip/CLIP8.png" alt="CLIP的强大"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP8.png" alt="CLIP的强大"></p>
 <p>结果也是意料之中。</p>
 <p>模型与人也做了一些比较，显示模型的zero-shot能力比人更强，但是学习能力显然是人更胜一筹(CLIP的few-shot能力不够)。</p>
 <p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP9.png" alt="对照表"></p>
@@ -443,7 +443,7 @@
 <p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP13.png" alt="看看杰洛特和希里"></p>
 <p>本来想为难一下clip的，结果初始四个看似与巫师无关的标签值中竟然有一个匹配概率很高（bird）</p>
 <p>仔细一想，Ciri的精灵语名为Zireael，是燕子的意思，难道说模型这么强，这都能匹配上？我再试试！</p>
-<p><img src="/2024/06/04/clip/CLIP14.png" alt="将bird改为swallow，匹配度提高"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP14.png" alt="将bird改为swallow，匹配度提高"></p>
 <p>我吃柠檬！CLIP是真的知道Ciri的名字啊！！！！！</p>
 <p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP15.png" alt="不得不服,CLIP精灵语也认得，坚定选择zireael"></p>
 <p>完全没压力，这里甚至只有father and daughter 和正确选项有权值分布</p>
@@ -570,49 +570,36 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/06/04/clip/">
+                <a href="/2024/06/11/clip-fu-ben/">
                     <div class="card-image">
                         
-                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/openAI_CLIP.png" class="responsive-img" alt="CLIP论文阅读">
                         
-                        <span class="card-title">CLIP论文阅读</span>
+                        <img src="/medias/featureimages/0.png" class="responsive-img" alt="">
+                        
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            谈到多模态不能不提的CLIP(Constrastive Language-Image Pre-training)
+                            
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-04
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-06-11
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/DeepLearning/" class="post-category">
-                                    DeepLearning
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            chris2ease
                             
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                        <span class="chip bg-color">人工智能</span>
-                    </a>
-                    
                 </div>
                 
             </div>
