@@ -366,11 +366,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="一个项目的基本组成框架"><a href="#一个项目的基本组成框架" class="headerlink" title="一个项目的基本组成框架"></a>一个项目的基本组成框架</h1><h4 id="基本步骤：Load-Data-Training-Validation-Testing"><a href="#基本步骤：Load-Data-Training-Validation-Testing" class="headerlink" title="基本步骤：Load Data , Training , Validation ,Testing"></a>基本步骤：Load Data , Training , Validation ,Testing</h4><p><img src="/2024/04/01/deep-learning1/DL0.png" alt="基本概念"></p>
-<p><img src="/2024/04/01/deep-learning1/DL22.png" alt="李宏毅课程网站"></p>
-<h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><h3 id="数据内容"><a href="#数据内容" class="headerlink" title="数据内容"></a>数据内容</h3><p><img src="/2024/04/01/deep-learning1/DL23.png" alt="输入数据"></p>
-<p><img src="/2024/04/01/deep-learning1/DL24.png" alt="输入数据"></p>
-<p><img src="/2024/04/01/deep-learning1/DL25.png" alt="输入数据"></p>
+                <h1 id="一个项目的基本组成框架"><a href="#一个项目的基本组成框架" class="headerlink" title="一个项目的基本组成框架"></a>一个项目的基本组成框架</h1><h4 id="基本步骤：Load-Data-Training-Validation-Testing"><a href="#基本步骤：Load-Data-Training-Validation-Testing" class="headerlink" title="基本步骤：Load Data , Training , Validation ,Testing"></a>基本步骤：Load Data , Training , Validation ,Testing</h4><p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL0.png" alt="基本概念"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL22.png" alt="李宏毅课程网站"></p>
+<h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><h3 id="数据内容"><a href="#数据内容" class="headerlink" title="数据内容"></a>数据内容</h3><p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL23.png" alt="输入数据"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL24.png" alt="输入数据"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL25.png" alt="输入数据"></p>
 <h3 id="HW01的数据读入"><a href="#HW01的数据读入" class="headerlink" title="HW01的数据读入"></a>HW01的数据读入</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">COVID19Dataset</span><span class="token punctuation">(</span>Dataset<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token triple-quoted-string string">'''
     x: Features.
@@ -441,9 +441,9 @@
     <span class="token comment">#tuple_rows[ [['3'],['12','14','9'],['1','0','0']], [['2'],['6','7'],['1','0']], [['4'],['13','2','25','35'],['0','1','1','0']] ]</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/2024/04/01/deep-learning1/DL1.png" alt="Dataset和Dataloader的基本概念"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL1.png" alt="Dataset和Dataloader的基本概念"></p>
 <p>Dataloader会呼叫dataset(batch_size)次，得到(batch_size)笔资料后，将这些资料汇总成一个batch,再去做后续的训练</p>
-<p><img src="/2024/04/01/deep-learning1/DL2.png" alt="DL2"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL2.png" alt="DL2"></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">run_epoch</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> optimizer<span class="token punctuation">,</span> students<span class="token punctuation">,</span> batch_size<span class="token punctuation">,</span> num_steps<span class="token punctuation">,</span> num_skills<span class="token punctuation">,</span> training<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> epoch<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
 <span class="token comment">#m: 表示一个模型.</span>
 
@@ -462,13 +462,13 @@
 <span class="token comment">#epoch: 表示当前的训练周期或迭代次数。一个训练周期表示模型对整个训练数据集进行一次完整的训练。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>Tensor是参数的常见形式，是多维的数据，.shape()函数可以判断参数的维度</p>
-<p><img src="/2024/04/01/deep-learning1/DL3.png" alt="DL3"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL3.png" alt="DL3"></p>
 <p>创建张量</p>
 <p>Pytorch支持tensor的基本运算，x&#x3D;x.transpose(0,1)#互换x张量的第0个维度和第1个维度</p>
-<p><img src="/2024/04/01/deep-learning1/DL4.png" alt="DL4"></p>
-<p><img src="/2024/04/01/deep-learning1/DL6.png" alt="DL5"></p>
-<p><img src="/2024/04/01/deep-learning1/DL7.png" alt="DL6"></p>
-<p><img src="/2024/04/01/deep-learning1/DL5.png" alt="DL7"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL4.png" alt="DL4"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL6.png" alt="DL5"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL7.png" alt="DL6"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL5.png" alt="DL7"></p>
 <p><strong>data：</strong>要用于创建张量的数据。可以是Python列表、NumPy数组、标量值或其他支持的数据类型。</p>
 <p><strong>dtype（可选）：</strong>指定张量的数据类型。默认情况下，PyTorch会根据输入数据自动确定数据类型。常见的数据类型包括torch.float32（默认的浮点型）、torch.int64（默认的整型）等。可以参考官方文档以获取完整的数据类型列表。</p>
 <p><strong>device（可选）：</strong>指定张量所在的设备。可以是’cpu’表示CPU、’cuda’表示CUDA设备，也可以是特定的设备对象。默认情况下，张量将被放置在CPU上。</p>
@@ -582,13 +582,13 @@ train_loader <span class="token operator">=</span> DataLoader<span class="token 
 valid_loader <span class="token operator">=</span> DataLoader<span class="token punctuation">(</span>valid_dataset<span class="token punctuation">,</span> batch_size<span class="token operator">=</span>config<span class="token punctuation">[</span><span class="token string">'batch_size'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> shuffle<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> pin_memory<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
 test_loader <span class="token operator">=</span> DataLoader<span class="token punctuation">(</span>test_dataset<span class="token punctuation">,</span> batch_size<span class="token operator">=</span>config<span class="token punctuation">[</span><span class="token string">'batch_size'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> shuffle<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> pin_memory<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/2024/04/01/deep-learning1/DL28.png" alt="DataLoader"></p>
-<p><img src="/2024/04/01/deep-learning1/DL21.png" alt="DL21"></p>
-<h3 id="训练神经网络的三个步骤：Define-Neural-Network-，Loss-Function-，-Optimization-Algorithm"><a href="#训练神经网络的三个步骤：Define-Neural-Network-，Loss-Function-，-Optimization-Algorithm" class="headerlink" title="训练神经网络的三个步骤：Define Neural Network ，Loss Function ， Optimization Algorithm"></a>训练神经网络的三个步骤：Define Neural Network ，Loss Function ， Optimization Algorithm</h3><p><img src="/2024/04/01/deep-learning1/DL8.png" alt="DL8"></p>
-<p><img src="/2024/04/01/deep-learning1/DL9.png" alt="DL9"></p>
-<p><img src="/2024/04/01/deep-learning1/DL10.png" alt="DL10"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL28.png" alt="DataLoader"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL21.png" alt="DL21"></p>
+<h3 id="训练神经网络的三个步骤：Define-Neural-Network-，Loss-Function-，-Optimization-Algorithm"><a href="#训练神经网络的三个步骤：Define-Neural-Network-，Loss-Function-，-Optimization-Algorithm" class="headerlink" title="训练神经网络的三个步骤：Define Neural Network ，Loss Function ， Optimization Algorithm"></a>训练神经网络的三个步骤：Define Neural Network ，Loss Function ， Optimization Algorithm</h3><p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL8.png" alt="DL8"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL9.png" alt="DL9"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL10.png" alt="DL10"></p>
 <p>x是输入，y是输出</p>
-<p><img src="/2024/04/01/deep-learning1/DL11.png" alt="DL11"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL11.png" alt="DL11"></p>
 <h3 id="HW01的神经网络模型"><a href="#HW01的神经网络模型" class="headerlink" title="HW01的神经网络模型"></a>HW01的神经网络模型</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">My_Model</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> input_dim<span class="token punctuation">)</span><span class="token punctuation">:</span>
         <span class="token builtin">super</span><span class="token punctuation">(</span>My_Model<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -610,11 +610,11 @@ test_loader <span class="token operator">=</span> DataLoader<span class="token p
         <span class="token keyword">return</span> x<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>3层网络</p>
-<p><img src="/2024/04/01/deep-learning1/DL26.png" alt="3层网络"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL26.png" alt="3层网络"></p>
 <p>4层网络</p>
-<p><img src="/2024/04/01/deep-learning1/DL27.png" alt="4层网络"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL27.png" alt="4层网络"></p>
 <p>128的batch_size</p>
-<p><img src="/2024/04/01/deep-learning1/DL30.png" alt="128的batch_size"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL30.png" alt="128的batch_size"></p>
 <h3 id="DKT的神经网络模型"><a href="#DKT的神经网络模型" class="headerlink" title="DKT的神经网络模型"></a>DKT的神经网络模型</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
 
 <span class="token keyword">class</span> <span class="token class-name">DeepKnowledgeTracing</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -658,21 +658,21 @@ test_loader <span class="token operator">=</span> DataLoader<span class="token p
         self<span class="token punctuation">.</span>decoder<span class="token punctuation">.</span>bias<span class="token punctuation">.</span>data<span class="token punctuation">.</span>zero_<span class="token punctuation">(</span><span class="token punctuation">)</span>
         self<span class="token punctuation">.</span>decoder<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>data<span class="token punctuation">.</span>uniform_<span class="token punctuation">(</span><span class="token operator">-</span>initrange<span class="token punctuation">,</span> initrange<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/2024/04/01/deep-learning1/DL12.png" alt="DL12"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL12.png" alt="DL12"></p>
 <p>常见的计算loss的函数</p>
-<p><img src="/2024/04/01/deep-learning1/DL13.png" alt="DL13"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL13.png" alt="DL13"></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">criterion <span class="token operator">=</span> nn<span class="token punctuation">.</span>BCEWithLogitsLoss<span class="token punctuation">(</span><span class="token punctuation">)</span>
 loss <span class="token operator">=</span> criterion<span class="token punctuation">(</span>logits<span class="token punctuation">,</span> target_correctness<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p><img src="/2024/04/01/deep-learning1/DL14.png" alt="DL14"></p>
-<p><img src="/2024/04/01/deep-learning1/DL15.png" alt="DL15"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL14.png" alt="DL14"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL15.png" alt="DL15"></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">loss<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token comment"># clip_grad_norm` helps prevent the exploding gradient problem in RNNs / LSTMs.</span>
 <span class="token comment"># max_norm越小，裁剪的梯度越大，得到的梯度就越小，防止梯度爆炸的效果越明显</span>
 torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>clip_grad_norm_<span class="token punctuation">(</span>m<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> args<span class="token punctuation">.</span>max_grad_norm<span class="token punctuation">)</span>
 optimizer<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/2024/04/01/deep-learning1/DL16.png" alt="DL16"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL16.png" alt="DL16"></p>
 <h3 id="训练模块的实际代码结构"><a href="#训练模块的实际代码结构" class="headerlink" title="训练模块的实际代码结构"></a>训练模块的实际代码结构</h3><h3 id="HW01"><a href="#HW01" class="headerlink" title="HW01"></a>HW01</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">trainer</span><span class="token punctuation">(</span>train_loader<span class="token punctuation">,</span> valid_loader<span class="token punctuation">,</span> model<span class="token punctuation">,</span> config<span class="token punctuation">,</span> device<span class="token punctuation">)</span><span class="token punctuation">:</span>
 
     criterion <span class="token operator">=</span> nn<span class="token punctuation">.</span>MSELoss<span class="token punctuation">(</span>reduction<span class="token operator">=</span><span class="token string">'mean'</span><span class="token punctuation">)</span> <span class="token comment"># Define your loss function, do not modify this.</span>
@@ -774,9 +774,9 @@ optimizer<span class="token punctuation">.</span>step<span class="token punctuat
     <span class="token comment"># total_loss += loss.item()</span>
     all_loss<span class="token punctuation">.</span>append<span class="token punctuation">(</span>loss<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/2024/04/01/deep-learning1/DL20.png" alt="DL20"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL20.png" alt="DL20"></p>
 <p>测试框架关闭了梯度计算，有些神经网络模型的训练和测试模式差别很大</p>
-<p><img src="/2024/04/01/deep-learning1/DL17.png" alt="DL17"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL17.png" alt="DL17"></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">else</span><span class="token punctuation">:</span>
     <span class="token comment"># 表明当前计算不需要反向传播，使用之后，强制后边的内容不进行计算图的构建</span>
     <span class="token keyword">with</span> torch<span class="token punctuation">.</span>no_grad<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -821,7 +821,7 @@ r2 <span class="token operator">=</span> <span class="token builtin">sum</span><
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>真正的测试，不给y，得出的预测概率</p>
-<p><img src="/2024/04/01/deep-learning1/DL18.png" alt="DL18"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning1/DL18.png" alt="DL18"></p>
 
                 
             </div>
@@ -940,7 +940,7 @@ r2 <span class="token operator">=</span> <span class="token builtin">sum</span><
                 <a href="/2024/04/04/qingming/">
                     <div class="card-image">
                         
-                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/qingming.jpg" class="responsive-img" alt="清明">
+                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Qingming/qingming.jpg" class="responsive-img" alt="清明">
                         
                         <span class="card-title">清明</span>
                     </div>
@@ -996,7 +996,7 @@ r2 <span class="token operator">=</span> <span class="token builtin">sum</span><
                 <a href="/2024/04/01/springday/">
                     <div class="card-image">
                         
-                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/SpringDay.jpg" class="responsive-img" alt="春日">
+                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/SpringDay/SpringDay.jpg" class="responsive-img" alt="春日">
                         
                         <span class="card-title">春日</span>
                     </div>

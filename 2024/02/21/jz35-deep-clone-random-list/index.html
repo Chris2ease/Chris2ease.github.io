@@ -367,7 +367,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="JZ35复杂链表的复制"><a href="#JZ35复杂链表的复制" class="headerlink" title="JZ35复杂链表的复制"></a>JZ35复杂链表的复制</h1><p>输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针random指向一个随机节点），请对此链表进行深拷贝，并返回拷贝后的头结点。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）。 下图是一个含有5个结点的复杂链表。图中实线箭头表示next指针，虚线箭头表示random指针。为简单起见，指向null的指针没有画出。</p>
-<p><img src="/2024/02/21/jz35-deep-clone-random-list/jz35-1.png" alt="jz35-图1"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/jz35-deep-clone-random-list/jz35-1.png" alt="jz35-图1"></p>
 <p>示例:</p>
 <p>输入:{1,2,3,4,5,3,5,’#’,2,’#’}</p>
 <p>输出:{1,2,3,4,5,3,5,’#’,2,’#’}</p>
@@ -376,7 +376,7 @@
 <p>后半部分，3，5，’#‘，2，‘#’分别的表示为</p>
 <p>1的位置指向3，2的位置指向5，3的位置指向null，4的位置指向2，5的位置指向null</p>
 <p>如下图:</p>
-<p><img src="/2024/02/21/jz35-deep-clone-random-list/jz35-2.png" alt="jz35-图2"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/jz35-deep-clone-random-list/jz35-2.png" alt="jz35-图2"></p>
 <h2 id="示例1"><a href="#示例1" class="headerlink" title="示例1"></a>示例1</h2><p>输入：</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">&#123;1,2,3,4,5,3,5,#,2,#&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -423,7 +423,7 @@ public:
 &#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="方法二：利用链表前后链接关系确认克隆后random指针的指向-省去了映射表的建立"><a href="#方法二：利用链表前后链接关系确认克隆后random指针的指向-省去了映射表的建立" class="headerlink" title="方法二：利用链表前后链接关系确认克隆后random指针的指向,省去了映射表的建立"></a>方法二：利用链表前后链接关系确认克隆后random指针的指向,省去了映射表的建立</h2><p>将克隆后的节点插入到原节点之后，A-&gt;A’-&gt;B-&gt;B’-&gt;C-&gt;C’,</p>
-<p><img src="/2024/02/21/jz35-deep-clone-random-list/jz35-3.gif" alt="jz-35图3"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/jz35-deep-clone-random-list/jz35-3.gif" alt="jz-35图3"></p>
 <p><strong>A’&#x3D;A-&gt;next</strong>, <strong>A’-&gt;random&#x3D;A-&gt;random-&gt;next</strong>;</p>
 <p>确认克隆后的random指针指向后再分离原链表和克隆链表</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class Solution &#123;&#x2F;&#x2F;先在每一个节点后面附它的克隆节点（定位），克隆节点的random指向本体random指向节点的next节点,克隆节点的random指到位后，将克隆链表与原链表剥离

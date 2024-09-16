@@ -377,36 +377,36 @@
 <p>dog         &#x3D;[0 0 0 1 0]</p>
 <p>elephant&#x3D;[0 0 0 0 1]</p>
 <p><strong>如果出现意料之外的词语，需要新增一个dimension,”others”</strong>.或是根据哈希值来编码出现的单词</p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-0.png" alt="Beyond 1-of-N encoding"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-0.png" alt="Beyond 1-of-N encoding"></p>
 <p>我们了解了哪些词汇可能会是符合我们slot特征的词汇，但是我们还需要知道一些信息</p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-1.png" alt="需要更多信息"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-1.png" alt="需要更多信息"></p>
 <p>已知Taipei可能为地点，但是不知道是出发地还是目的地，我们希望这个网络可以记忆出现在它之前的一些词语以便更精确的设置它的属性。</p>
 <p>在隐藏的中间网络层，其中会有将运行过程中的参数放入内存的行为（记忆），前置的词汇会对于后来的词汇的处理产生一定的影响，所以即使Slot关键词相同，也可以产生不同的输出结果.</p>
 <p>以下例子输入的向量是[ 1,1] [ 1,1] [ 2,2]，可以看到尽管输入的都是[ 1,1],但是输出却不同</p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-2.png" alt="对输入有记忆"></p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-3.png" alt="之前的输入会对后来的输入产生影响"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-2.png" alt="对输入有记忆"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-3.png" alt="之前的输入会对后来的输入产生影响"></p>
 <p>对于一条语句，我们将词汇依次输入，RNN神经网络会重复这一循环</p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-4.png" alt="循环往复"></p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-5.png" alt="不同的前置词汇会对相同的关键字产生不同的影响"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-4.png" alt="循环往复"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-5.png" alt="不同的前置词汇会对相同的关键字产生不同的影响"></p>
 <p>其实hidden layer可以有很多层，传递参数也不一定是同一层的hidden layer中的参数相互传值，也可以将每一层较易显现特征的y作为下一循环hidden layer层的输入。</p>
 <p>而且RNN也可以逆向读取，因为有些定义关键词的词语是后置于关键词的，Bidirectional RNN</p>
 <p>这样子可以将整个句子统一起来，根据上下文更精确的掌握关于关键词的信息。</p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-6.png" alt="Bidirectional RNN"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-6.png" alt="Bidirectional RNN"></p>
 <p>如果按照上文的操作，每一步内存中的值都会刷新，事实上没有必要一直刷新，我们希望内存中的值可以存放的更久一些，所以需要一些控件来操纵内存的读写。</p>
 <p>RNN对于内存数据有一套特殊的管理机制——Long Short-term Memory（LSTM),较长的短期内存 </p>
 <p>LSTM控制输入是否写入内存，内存是否可被输出，内存是否需要清空。</p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-7.png" alt="Bidirectional RNN"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-7.png" alt="Bidirectional RNN"></p>
 <p>其实每一个Gate都是一个类似sigmoid函数在控制开闭，结合向量z的各个维度的值来控制内存中数据的读写</p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-8.png" alt="sigmoid Gates"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-8.png" alt="sigmoid Gates"></p>
 <p>看看例子吧</p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-9.png" alt="规则"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-9.png" alt="规则"></p>
 <p>实际上用于计算的值会是每一个(维度的值*weight+bias)，其中每一个门对于每一个维度的weight和bias都是training_data通过梯度下降计算出来的，我们写出这些weight和bias来具体解释运行逻辑</p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-10.png" alt="具体步骤"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-10.png" alt="具体步骤"></p>
 <p>其实呢，将LSTM看作一个函数的话，RNN就和一般的神经网络结构一样啦，都是输入-&gt;函数-&gt;输出，只是内部函数的结构有别，它所需要的参数量会是一般神经网络的四倍（一个输入，三个依赖输入的门）。</p>
 <p>将最初的向量x乘以某个向量成为z向量，z向量的每一维都分配到一个LSTM里面去控制对应cell中的内容，z向量的维数就是LSTM的层数。</p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-11.png" alt="具体步骤"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-11.png" alt="具体步骤"></p>
 <p>真正的LSTM</p>
-<p><img src="/2024/03/09/recurrent-neural-network-rnn/rnn-12.png" alt="看看"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Recurrent-Neural-Network-RNN/rnn-12.png" alt="看看"></p>
 <p>事实上软件可以直接调用LSTM,其中具体的底层步骤不用人工实现（挺好）</p>
 
                 

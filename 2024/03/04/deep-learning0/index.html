@@ -373,50 +373,50 @@
                 <h1 id="DeepLearning基本步骤"><a href="#DeepLearning基本步骤" class="headerlink" title="DeepLearning基本步骤"></a>DeepLearning基本步骤</h1><h3 id="我们需要一个可以解决问题的方案（函数）"><a href="#我们需要一个可以解决问题的方案（函数）" class="headerlink" title="我们需要一个可以解决问题的方案（函数）"></a><strong>我们需要一个可以解决问题的方案（函数）</strong></h3><h4 id="1-建立含未知参数的函数，函数的形式很重要，函数中参数的取值也很重要。"><a href="#1-建立含未知参数的函数，函数的形式很重要，函数中参数的取值也很重要。" class="headerlink" title="1.建立含未知参数的函数，函数的形式很重要，函数中参数的取值也很重要。"></a><strong>1.建立含未知参数的函数，函数的形式很重要，函数中参数的取值也很重要。</strong></h4><h4 id="2-定义变量Loss作为判断参数是否合理的依据（需要已有数据进行参考）。"><a href="#2-定义变量Loss作为判断参数是否合理的依据（需要已有数据进行参考）。" class="headerlink" title="2.定义变量Loss作为判断参数是否合理的依据（需要已有数据进行参考）。"></a><strong>2.定义变量Loss作为判断参数是否合理的依据（需要已有数据进行参考）。</strong></h4><p>$$<br>e&#x3D;|y-\hat{y}|或(y-\hat{y})^2,y是推测值，\hat{y}是真实值<br>$$</p>
 <p>​<br>$$<br>Loss: L&#x3D;1&#x2F;N\sum_{i&#x3D;1}^{n}e_n<br>$$</p>
 <h4 id="3-最优化参数（梯度下降法）"><a href="#3-最优化参数（梯度下降法）" class="headerlink" title="3.最优化参数（梯度下降法）"></a><strong>3.最优化参数（梯度下降法）</strong></h4><p>不断迭代w的值使得Loss最小，或者规定最大迭代次数，得到最优的参数值w</p>
-<p><img src="/2024/03/04/deep-learning0/DL0-4.png" alt="梯度下降0"></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-21.png" alt="梯度下降1"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-4.png" alt="梯度下降0"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-21.png" alt="梯度下降1"></p>
 <p><strong>以上三步就是Training(训练)</strong></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-22.png" alt="由已知数据直接确定参数"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-22.png" alt="由已知数据直接确定参数"></p>
 <p>已知数据明显以七天为周期，将b固定，以第一周的数据为基准设定w1~w7,事实上对于长期的预测没有太大帮助。</p>
 <h3 id="遇到复杂的函数怎么办？"><a href="#遇到复杂的函数怎么办？" class="headerlink" title="遇到复杂的函数怎么办？"></a>遇到复杂的函数怎么办？</h3><h4 id="按步骤来"><a href="#按步骤来" class="headerlink" title="按步骤来"></a>按步骤来</h4><h3 id="1-得到函数的形式"><a href="#1-得到函数的形式" class="headerlink" title="1.得到函数的形式"></a><em>1.得到函数的形式</em></h3><h4 id="通过已有数据做出函数图像。"><a href="#通过已有数据做出函数图像。" class="headerlink" title="通过已有数据做出函数图像。"></a>通过已有数据做出函数图像。</h4><p>对于折线，可将多个简单的”Z型“线性模型进行组合</p>
-<p><img src="/2024/03/04/deep-learning0/DL0-0.png" alt="得到函数0"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-0.png" alt="得到函数0"></p>
 <p>对于曲线，可通过折线对其进行拟合</p>
-<p><img src="/2024/03/04/deep-learning0/DL0-14.png" alt="得到函数1"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-14.png" alt="得到函数1"></p>
 <p>而作为图像拟合基础的“Z”型的线性模型是一个特别的函数<em><strong>Sigmoid Function</strong></em>拟合的（S型函数）</p>
-<p><img src="/2024/03/04/deep-learning0/DL0-12.png" alt="得到函数2"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-12.png" alt="得到函数2"></p>
 <p>通过调整sigmoid function的参数来调整其图像形状从而组合、拟合目标函数</p>
-<p><img src="/2024/03/04/deep-learning0/DL0-15.png" alt="得到函数3"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-15.png" alt="得到函数3"></p>
 <p>于是，我们可以通过多个sigmoid函数的组合来写出最终的函数方程</p>
-<p><img src="/2024/03/04/deep-learning0/DL0-17.png" alt="得到函数4"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-17.png" alt="得到函数4"></p>
 <p>简单的拟合函数可以变形成更精确的形式</p>
-<p><img src="/2024/03/04/deep-learning0/DL0-23.png" alt="得到函数5"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-23.png" alt="得到函数5"></p>
 <p><strong>将函数拆开仔细分析，可以得到矩阵表示</strong></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-24.png" alt="得到函数6"></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-25.png" alt="得到函数7"></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-26.png" alt="得到函数8"></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-27.png" alt="得到函数9"></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-28.png" alt="得到函数10"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-24.png" alt="得到函数6"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-25.png" alt="得到函数7"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-26.png" alt="得到函数8"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-27.png" alt="得到函数9"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-28.png" alt="得到函数10"></p>
 <p><strong>整理所有未知参数</strong></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-29.png" alt="得到函数11"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-29.png" alt="得到函数11"></p>
 <h3 id="2-定义Loss变量"><a href="#2-定义Loss变量" class="headerlink" title="2.定义Loss变量"></a><em><strong>2.定义Loss变量</strong></em></h3><p>定义Loss为有关所有参数的函数L</p>
-<p><img src="/2024/03/04/deep-learning0/DL0-30.png" alt="定义Loss变量0"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-30.png" alt="定义Loss变量0"></p>
 <h3 id="3-最优化参数"><a href="#3-最优化参数" class="headerlink" title="3.最优化参数"></a><em><strong>3.最优化参数</strong></em></h3><p>先随机选出一组参数值，对它们求导，进行梯度运算,直到得到零向量或者不想再做为止。</p>
-<p><img src="/2024/03/04/deep-learning0/DL0-31.png" alt="最优化参数0"></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-32.png" alt="最优化参数1"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-31.png" alt="最优化参数0"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-32.png" alt="最优化参数1"></p>
 <p>实际训练时会将大量的原始数据分成很多较小的batch，对每一个batch，首先根据batch里的数据估计出各个Loss函数的形式，为了参数可以顺利传递，参数的种类个数是不变的，但是参数的存在形式是可以不同的（幂次、组合），对于不同的batch，learningrate也可以进行调整。</p>
-<p><img src="/2024/03/04/deep-learning0/DL0-33.png" alt="最优化参数2"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-33.png" alt="最优化参数2"></p>
 <p><strong>分的batch越多，一次epoch所update的次数越大</strong></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-34.png" alt="最优化参数3"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-34.png" alt="最优化参数3"></p>
 <p>其实也有<strong>真正直线型的”Z型“</strong>函数<strong>ReLU</strong></p>
 <p>它是由两个分段线性函数组合而成的，可以用它代替<strong>sigmoid</strong>。</p>
-<p><img src="/2024/03/04/deep-learning0/DL0-35.png" alt="最优化参数4"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-35.png" alt="最优化参数4"></p>
 <p>两个常见的激活函数<strong>ReLU</strong>和<strong>Sigmoid</strong></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-36.png" alt="最优化参数5"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-36.png" alt="最优化参数5"></p>
 <p>为了得到更精确的参数，往往会<strong>在激活函数内部嵌套激活函数</strong>，层层调用。</p>
-<p><img src="/2024/03/04/deep-learning0/DL0-8.png" alt="最优化参数6"></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-37.png" alt="最优化参数7"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-8.png" alt="最优化参数6"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-37.png" alt="最优化参数7"></p>
 <p><strong>因此得名DeepLearning</strong></p>
-<p><img src="/2024/03/04/deep-learning0/DL0-38.png" alt="最优化参数8"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning0/DL0-38.png" alt="最优化参数8"></p>
 <p>事实上，层数太多也会有 过拟合现象，在已知数据层可以跑的很好，但在预测未知数据时偏差就会变大，层数如此之多，为何选择不增多激活函数的个数而是选择层层嵌套结构呢，请待下回分解。</p>
 
                 

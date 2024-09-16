@@ -372,12 +372,12 @@
 <p>在预训练阶段，模型使用大规模的无标签文本数据进行训练，通过任务称为”掩码语言建模”和”下一句预测”来学习词语和句子级别的语义表示。在掩码语言建模任务中，BERT会随机掩盖输入句子中的一些词语，然后尝试预测这些被掩盖的词语。在下一句预测任务中，BERT会判断两个句子是否是原文中相邻的句子。</p>
 <p>在微调阶段，BERT模型会在特定的下游任务上进行有监督的训练。通过在特定任务上微调预训练模型的参数，BERT可以适应各种具体的NLP任务，如文本分类、命名实体识别、问答等。在微调过程中，BERT模型的上层结构会被添加或修改，同时使用有标签的数据进行监督学习。</p>
 <p>BERT的优势在于它能够通过预训练阶段学习到通用的语言表示，从而可以在不同的NLP任务上进行迁移学习。它在多个基准数据集上都取得了卓越的性能，甚至在某些任务上超过了人类水平。BERT的开放源代码和预训练模型使得研究人员和开发者可以轻松使用和扩展这一强大的语言模型。</p>
-<p><img src="/2024/03/23/bert/Bert.png" alt="概念"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Bert/Bert.png" alt="概念"></p>
 <p>Bert的pre-train过程从自身输入中取出一部分作为label,即目标输出，外部已知取出部分，练习模型填空的能力。事实上，bert不仅在语言处理领域，在音频影像的处理上也可以有较好的效果。</p>
-<p>Bert的实现填空的工作流程<br><img src="/2024/03/23/bert/Bert1.png" alt="工作流程"></p>
+<p>Bert的实现填空的工作流程<br><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Bert/Bert1.png" alt="工作流程"></p>
 <p>对前后文的向量计算得到概率最大的选项</p>
-<p><img src="/2024/03/23/bert/Bert3.png" alt="对前后文的向量计算得到概率最大的选项"></p>
-<p><img src="/2024/03/23/bert/Bert4.png" alt="Bert的预训练周期长，所需的数据量庞大"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Bert/Bert3.png" alt="对前后文的向量计算得到概率最大的选项"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Bert/Bert4.png" alt="Bert的预训练周期长，所需的数据量庞大"></p>
 <p>将输入文本传递给预训练好的 BERT 模型，模型会将每个词转换为对应的向量表示，这些向量表示可以用作输入文本的表示或特征，用于下游任务。即用Bert模型实现文本转embedding,代替DKT模型原有的one-hot输入表示，希望获得更好的预测效果。</p>
 <h2 id="获取文本"><a href="#获取文本" class="headerlink" title="获取文本"></a>获取文本</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">getContext</span><span class="token punctuation">(</span>record<span class="token punctuation">)</span><span class="token punctuation">:</span>
     ls <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"C"</span><span class="token punctuation">,</span> <span class="token string">"D"</span><span class="token punctuation">]</span>

@@ -370,23 +370,23 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><img src="/2024/03/02/i-really-want-to-access-my-ubuntu/Ag0.png" alt="课程ppt"></p>
+                <p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/I-Really-Want-To-Access-My-Ubuntu/Ag0.png" alt="课程ppt"></p>
 <p>最后一步往往无法成功跳出密码输入的窗口，而是显示无法连接到ip,以下是解决方案。</p>
 <h4 id="1-调整VirtualBox的网络设置"><a href="#1-调整VirtualBox的网络设置" class="headerlink" title="1.调整VirtualBox的网络设置"></a><strong>1.调整VirtualBox的网络设置</strong></h4><p>最初查找到的ip是诡异的10.0.2.15。</p>
 <p><strong>在’工具‘栏点击选择’网络‘，’创建‘，自动生成网卡</strong></p>
-<p><img src="/2024/03/02/i-really-want-to-access-my-ubuntu/Ag1.png" alt="生成网卡0"></p>
-<p><img src="/2024/03/02/i-really-want-to-access-my-ubuntu/Ag2.png" alt="生成网卡1"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/I-Really-Want-To-Access-My-Ubuntu/Ag1.png" alt="生成网卡0"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/I-Really-Want-To-Access-My-Ubuntu/Ag2.png" alt="生成网卡1"></p>
 <p><strong>在windows‘设备管理器’，’网络适配器‘中可查看网卡信息</strong>，可以看到VirtualBox Host-Only Ethernet Adapter</p>
-<p><img src="/2024/03/02/i-really-want-to-access-my-ubuntu/Ag3.png" alt="生成网卡2"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/I-Really-Want-To-Access-My-Ubuntu/Ag3.png" alt="生成网卡2"></p>
 <p>若网卡图标上出现黄色三角感叹号表示该设备无法正常运作，可以下载CCleaner清理注册表，重启电脑即可完成网卡驱动的修复。CCleaner免费版下载见B站视频BV1yc411B79t（顺便修好了校园网VPN）。</p>
 <p>回到VirtualBox的主界面，进入虚拟机的‘设置’界面，添加网卡2，选择连接方式为Host-Only，系统会自动检测到已添加的对应网卡，确定即可。（需关闭虚拟机，否则无法添加）</p>
-<p><img src="/2024/03/02/i-really-want-to-access-my-ubuntu/Ag4.png" alt="生成网卡3"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/I-Really-Want-To-Access-My-Ubuntu/Ag4.png" alt="生成网卡3"></p>
 <p>此后，打开虚拟机，再查看虚拟机ip,就生成了192.168开头的一个新ip.</p>
 <h4 id="2-更改vscode的设置文件"><a href="#2-更改vscode的设置文件" class="headerlink" title="2.更改vscode的设置文件"></a><strong>2.更改vscode的设置文件</strong></h4><p><strong>点击左下角齿轮，再进入‘设置’，在右上角点击“打开设置json”将ui模式换为json模式</strong>，在settings.json中加入”remote.SSH.remotePlatform”: {</p>
 <p>   “192.168.121.3”:”linux” &#x2F;&#x2F;自动选择Linux</p>
 <p>  },&#x2F;&#x2F;不关键</p>
 <p>  “remote.SSH.useLocalServer”: false,&#x2F;&#x2F;关键</p>
-<p><img src="/2024/03/02/i-really-want-to-access-my-ubuntu/Ag5.png" alt="更改设置文件"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/I-Really-Want-To-Access-My-Ubuntu/Ag5.png" alt="更改设置文件"></p>
 <h4 id="3-关闭虚拟机防火墙。"><a href="#3-关闭虚拟机防火墙。" class="headerlink" title="3.关闭虚拟机防火墙。"></a><strong>3.关闭虚拟机防火墙。</strong></h4><p>在虚拟机终端里使用如下命令</p>
 <pre class="line-numbers language-none"><code class="language-none">sudo systemctl stop ufw
 sudo systemctl disable ufw<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -399,7 +399,7 @@ sudo systemctl disable ufw<span aria-hidden="true" class="line-numbers-rows"><sp
 <h4 id="4-打开虚拟机的ssh连接服务"><a href="#4-打开虚拟机的ssh连接服务" class="headerlink" title="4.打开虚拟机的ssh连接服务"></a><strong>4.打开虚拟机的ssh连接服务</strong></h4><pre class="line-numbers language-none"><code class="language-none">sudo apt-get install openssh-server
 sudo service ssh start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h4 id="5-回到vscode-在输入栏中输入“ssh-“用户名”-”ip”稍等片刻即可成功连接。"><a href="#5-回到vscode-在输入栏中输入“ssh-“用户名”-”ip”稍等片刻即可成功连接。" class="headerlink" title="5.回到vscode,在输入栏中输入“ssh “用户名”@”ip”稍等片刻即可成功连接。"></a><strong>5.回到vscode,在输入栏中输入“ssh “用户名”@”ip”稍等片刻即可成功连接。</strong></h4><p><img src="/2024/03/02/i-really-want-to-access-my-ubuntu/Ag6.png" alt="链接成功！"></p>
+<h4 id="5-回到vscode-在输入栏中输入“ssh-“用户名”-”ip”稍等片刻即可成功连接。"><a href="#5-回到vscode-在输入栏中输入“ssh-“用户名”-”ip”稍等片刻即可成功连接。" class="headerlink" title="5.回到vscode,在输入栏中输入“ssh “用户名”@”ip”稍等片刻即可成功连接。"></a><strong>5.回到vscode,在输入栏中输入“ssh “用户名”@”ip”稍等片刻即可成功连接。</strong></h4><p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/I-Really-Want-To-Access-My-Ubuntu/Ag6.png" alt="链接成功！"></p>
 
                 
             </div>
@@ -574,7 +574,7 @@ sudo service ssh start<span aria-hidden="true" class="line-numbers-rows"><span><
                 <a href="/2024/02/29/february-29th/">
                     <div class="card-image">
                         
-                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Demonic_Illidan_full.jpg" class="responsive-img" alt="February 29th">
+                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/February-29th/Demonic_Illidan_full.jpg" class="responsive-img" alt="February 29th">
                         
                         <span class="card-title">February 29th</span>
                     </div>

@@ -366,9 +366,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="全连接层"><a href="#全连接层" class="headerlink" title="全连接层"></a>全连接层</h3><p><img src="/2024/04/15/deep-learning2/DL0.png" alt="如图"></p>
+                <h3 id="全连接层"><a href="#全连接层" class="headerlink" title="全连接层"></a>全连接层</h3><p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning2/DL0.png" alt="如图"></p>
 <p>hidden layers中每一层中的每一个参数都与上一层的每一个参数有连接，所以称为全连接</p>
-<p><img src="/2024/04/15/deep-learning2/DL1.png" alt="对于手写数字的识别"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning2/DL1.png" alt="对于手写数字的识别"></p>
 <p>输入16*16&#x3D;256维的张量，通过神经网络的处理，输出10维的张量。</p>
 <h3 id="GPU可以加速矩阵运算的原因"><a href="#GPU可以加速矩阵运算的原因" class="headerlink" title="GPU可以加速矩阵运算的原因"></a>GPU可以加速矩阵运算的原因</h3><ol>
 <li><strong>并行计算能力</strong>：GPU具有大量的处理单元，可以同时执行多个计算任务。与此相比，传统的中央处理单元（CPU）通常拥有较少的处理单元。在矩阵运算中，可以将矩阵的不同元素或者矩阵的不同部分分配给不同的处理单元并行计算，从而提高计算效率。</li>
@@ -380,11 +380,11 @@
 <p>GPU（图形处理单元）是一种专门为并行计算而设计的处理器。它最初用于图形渲染和处理，但由于其并行计算的能力，被广泛应用于科学计算、机器学习、深度学习等领域。GPU的优势在于处理大规模数据并行任务，如矩阵运算、图像处理、物理模拟等。它具有大量的处理单元和高内存带宽，适用于高度并行的算法和任务。</p>
 <p>实际应用中，常常会使用CPU和GPU的组合，充分发挥它们各自的优势，以提高计算效率和性能。在机器学习中，通常使用CPU进行数据预处理和模型训练的控制流程，而使用GPU进行矩阵运算和模型推理的并行计算部分。</p>
 <h3 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h3><p>在机器学习的梯度下降算法中，为了优化参数，很关键的一点是计算每一个参数对于Loss的偏微分，以此来调整参数，而在多层神经网络中，使用反向传播可以有效利用链式法则计算这些偏微分的结果。</p>
-<p><img src="/2024/04/15/deep-learning2/DL2.png"></p>
-<p><img src="/2024/04/15/deep-learning2/DL3.png"><br>$$<br>\frac{\partial z}{\partial w}即是输入x,而\frac{\partial C}{\partial z}则需要链式法则从后向前计算（这里需要反向传播的过程）<br>$$<br><img src="/2024/04/15/deep-learning2/DL4.png"></p>
-<p><img src="/2024/04/15/deep-learning2/DL5.png"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning2/DL2.png"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning2/DL3.png"><br>$$<br>\frac{\partial z}{\partial w}即是输入x,而\frac{\partial C}{\partial z}则需要链式法则从后向前计算（这里需要反向传播的过程）<br>$$<br><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning2/DL4.png"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning2/DL5.png"></p>
 <p><strong>事就这样成了</strong></p>
-<p><img src="/2024/04/15/deep-learning2/DL6.png"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Deep-Learning2/DL6.png"></p>
 <p>在模型中只要使用简单的一句loss.backward()即可。</p>
 
                 
@@ -504,7 +504,7 @@
                 <a href="/2024/04/16/i-need-sleep/">
                     <div class="card-image">
                         
-                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/lawn.jpg" class="responsive-img" alt="我需要睡眠">
+                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/I-need-sleep/lawn.jpg" class="responsive-img" alt="我需要睡眠">
                         
                         <span class="card-title">我需要睡眠</span>
                     </div>
@@ -552,7 +552,7 @@
                 <a href="/2024/04/10/blizzard/">
                     <div class="card-image">
                         
-                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/BZ1.png" class="responsive-img" alt="BLIZZARD">
+                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/BLIZZARD/BZ1.png" class="responsive-img" alt="BLIZZARD">
                         
                         <span class="card-title">BLIZZARD</span>
                     </div>

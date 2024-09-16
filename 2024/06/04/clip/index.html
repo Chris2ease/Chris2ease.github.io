@@ -288,7 +288,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/openAI_CLIP.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/openAI_CLIP.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -367,23 +367,23 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="CLIP"><a href="#CLIP" class="headerlink" title="CLIP"></a>CLIP</h1><p>CLIP是由openAI推出的用于图片分类、目标检测的图像+文本多模态预训练模型</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP_model.png" alt="CLIP模型总览图"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP_model.png" alt="CLIP模型总览图"></p>
 <p>**CLIP预训练方法: ** 使用配对的图片文字集（pairs）作为输入，图片和文本分别通过图像编码器和文本编码器得到图片和文本各自的一些特征，每一个training batch中都有n个图片文本对，就得到n个图片特征和n个文本特征，CLIP在这些特征上做对比学习，将特征矩阵对角线上的张量积为正样本，其他的全为负样本，无需手工标注，实现了无监督的预训练方式。这种训练所需要的数据量是庞大的，这里openAI收集了4亿个图片文本对，使得CLIP异常强大。</p>
 <p><strong>zero-shot预测：</strong>将感兴趣的图片和文本放入训练好的图像编码器和文本编码器中进行特征提取，模型就会计算出图片和各个文本的相似度，从而选择出与图片最相近的文本。CLIP不像之前的CV模型具有严格的分类头（categorical label），它具有zero-shot能力，其标签是可以人为输入的，这是CLIP的创新之处。由于CLIP在训练时将视觉语义和文字语义联系起来了，所以它学到的特征的语义性很强，迁移效果好。</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP_blog.png" alt="CLIP强大的zero-shot能力"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP_blog.png" alt="CLIP强大的zero-shot能力"></p>
 <p>训练时使用固定标签分类头的传统模型其迁移效果不佳，特别是对于抽象噪音多的图片识别准确率大幅度下降</p>
 <p><strong>CLIP的有趣用途：</strong></p>
 <p><strong>AI绘图</strong>：</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Style_clip.png" alt="基于CLIP的图像编辑软件"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/Style_clip.png" alt="基于CLIP的图像编辑软件"></p>
 <p>只需要改变文本描述就可以改变图像风格</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Style_clip1.png" alt="输入文件描述后，上方图片就更改为了下方图片"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/Style_clip1.png" alt="输入文件描述后，上方图片就更改为了下方图片"></p>
 <p>使用风格图片与提示文本进行绘画</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Styledraw.png" alt="抽象派画家的强劲对手"></p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Styledraw1.png" alt="纯正的后现代风格"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/Styledraw.png" alt="抽象派画家的强劲对手"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/Styledraw1.png" alt="纯正的后现代风格"></p>
 <p><strong>OCR（Optical Character Recognition，光学字符识别）</strong>:</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIFS.png" alt="CLIFS"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIFS.png" alt="CLIFS"></p>
 <p>在视频中定位相关物体的出现帧</p>
-<h2 id="论文"><a href="#论文" class="headerlink" title="论文"></a>论文</h2><p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP.png" alt="论文原文[Learning Transferable Visual Models From Natural Language Supervision (arxiv.org)](https://arxiv.org/pdf/2103.00020)"></p>
+<h2 id="论文"><a href="#论文" class="headerlink" title="论文"></a>论文</h2><p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP.png" alt="论文原文[Learning Transferable Visual Models From Natural Language Supervision (arxiv.org)](https://arxiv.org/pdf/2103.00020)"></p>
 <p><strong>背景补充：</strong>Transformer处理方式的出现对自然语言处理（NLP）领域产生了革命性的影响。Transformer模型由Vaswani等人在2017年的论文《Attention Is All You Need》中提出，它是一种基于注意力机制（attention mechanism）的深度学习模型，专门设计用于处理序列数据，如文本。</p>
 <p>以下是Transformer模型对NLP领域重要性的几个关键点：</p>
 <ol>
@@ -399,26 +399,26 @@
 <p>2.模型学习到的是图像加文本描述的多模态特征，zero-shot的迁移效果好。</p>
 <p>先前其实也有研究团队在探索这方面的模型预训练方法，但是当时的自然语言处理还没有出现自监督训练&#x2F;transformer的方式，时机不对，效果不佳，2017年之后相关研究的数据集又不够大，效果不够好，openAI的数据集够大，训练出来的模型就很强大。</p>
 <p>其实采用对比学习的预训练方法是出于效率考虑：如果像gpt一样给定一张图片，逐字逐句去生成对应的文本描述，这样的预测学习效率太低（很难），只是判断图像文本是否配对的话，训练效率会快很多，就算是openAI也承担不起生成式学习的代价</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP1.png" alt="对比学习显著的效率优势"></p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP2.png" alt="代码框架"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP1.png" alt="对比学习显著的效率优势"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP2.png" alt="代码框架"></p>
 <p>典型的对比学习思路，在transformer模型的选择上也是很稳健，作者也介绍了训练过程中对于任务的实际操作，涉及到大量细节的工程优化，尽管思路清晰，CLIP的落地训练也是步步为营。</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP3.png" alt="细节"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP3.png" alt="细节"></p>
 <p>训练好后，在模型zero-shot的预测过程中需要用到prompt engineering </p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP4.png" alt="prompt engineering将标签词补充成句子再放入文本编码器中"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP4.png" alt="prompt engineering将标签词补充成句子再放入文本编码器中"></p>
 <p>prompt起到一个提示的作用，将标签词补充成句子可以与之前用于训练文本编码器的文本描述句子所匹配，减少distribution gap, 也可以在一定程度上避免词语的多义性所导致的歧义问题，这里可以根据不同的标签类型使用不同的prompt,提高预测准确度，用不同prompt模板，将所得结果综合一下，可以得到更好的结果。</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP5.png" alt="prompt模板们"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP5.png" alt="prompt模板们"></p>
 <p>文章接下来的部分，作者对于CLIP模型在27个数据集上的预测结果做了分析，显示了CLIP惊人的zero-shot预测能力，CLIP对于日常物体的分类能力较强，而对于纹理识别、计数、专业领域分类的任务表现不佳。</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP6.png" alt="CLIP在27个数据集上与有监督训练好的模型的效果比较"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP6.png" alt="CLIP在27个数据集上与有监督训练好的模型的效果比较"></p>
 <p>对某些专业领域，zero-shot预测实在是强人所难，所以作者又尝试了few-shot，并将结果与常见的Baseline做了比较，把CLIP中的图像编码器取出来冻住，去做linear probe就可以实现few-shot</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP7.png" alt="优秀的CLIP"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP7.png" alt="优秀的CLIP"></p>
 <p>few-shot确实可以提高CLIP的准确率，在训练样本数少时，CLIP的few-shot表现还不如zero-shot，但是随着训练样本的增多，few-shot的CLIP完全可以超过其本身的zero-shot表现，在处理较难的数据集时，最好还是使用few-shot提高模型准确度，但这有失CLIP的本意。</p>
 <p>既然说了zero-shot和few-shot，那么作者就又讲讲下游任务上用全部的数据所得到的结果，一般使用Linear probe和fine tune这两种方法来衡量模型学到的特征好坏。</p>
 <p>Linear probe是把预训练好的模型冻住，再在上面训练一个分类头，而Fine tune是把整个网络放开，做端到端的学习。Fine tune比较灵活，在下游数据集比较大的时候效果比Linear probe好很多，但是作者使用的是Linear probe。一是因为微调会改变模型参数，可能将原本不好的模型调整好，而Linear probe可以更准确的反映出预训练模型的好坏。二是因为微调需要调参，CLIP模型很大，要微调的超参和设计方案太多了，微调需要对于每一个下游数据集调整参数，Linear probe就只是抽特征学最后一层分类层，相对于微调来说大大简化了流程。</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP8.png" alt="CLIP的强大"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP8.png" alt="CLIP的强大"></p>
 <p>结果也是意料之中。</p>
 <p>模型与人也做了一些比较，显示模型的zero-shot能力比人更强，但是学习能力显然是人更胜一筹(CLIP的few-shot能力不够)。</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP9.png" alt="对照表"></p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP10.png" alt="你难我也难"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP9.png" alt="对照表"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP10.png" alt="你难我也难"></p>
 <p><strong>最后还得讲讲CLIP的limitations.</strong></p>
 <ol>
 <li><p>现有的CLIP训练规模没有办法使模型达到SOTA的标准，在特定数据集上和最优的模型仍然存在不小的差距，只能和baseline比一比。</p>
@@ -436,24 +436,24 @@
 <li><p>从网上爬下来的未清洗审查的数据会带有社会上的偏见，不当的使用CLIP可能会放大偏见。</p>
 </li>
 </ol>
-<h1 id="来试试clip的能力如何"><a href="#来试试clip的能力如何" class="headerlink" title="来试试clip的能力如何"></a>来试试clip的能力如何</h1><p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP11.png" alt="参考CLIP论文中的colab"></p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP12.png" alt="头文件"></p>
+<h1 id="来试试clip的能力如何"><a href="#来试试clip的能力如何" class="headerlink" title="来试试clip的能力如何"></a>来试试clip的能力如何</h1><p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP11.png" alt="参考CLIP论文中的colab"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP12.png" alt="头文件"></p>
 <p>导入想识别的图片与感兴趣的标签</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/Geralt-and-ciri.jpg" alt="看看CLIP认不认识宝贝女儿"></p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP13.png" alt="看看杰洛特和希里"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/Geralt-and-ciri.jpg" alt="看看CLIP认不认识宝贝女儿"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP13.png" alt="看看杰洛特和希里"></p>
 <p>本来想为难一下clip的，结果初始四个看似与巫师无关的标签值中竟然有一个匹配概率很高（bird）</p>
 <p>仔细一想，Ciri的精灵语名为Zireael，是燕子的意思，难道说模型这么强，这都能匹配上？我再试试！</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP14.png" alt="将bird改为swallow，匹配度提高"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP14.png" alt="将bird改为swallow，匹配度提高"></p>
 <p>我吃柠檬！CLIP是真的知道Ciri的名字啊！！！！！</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP15.png" alt="不得不服,CLIP精灵语也认得，坚定选择zireael"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP15.png" alt="不得不服,CLIP精灵语也认得，坚定选择zireael"></p>
 <p>完全没压力，这里甚至只有father and daughter 和正确选项有权值分布</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP16.png" alt="心服口服"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP16.png" alt="心服口服"></p>
 <p>但是上图是网图，很可能在4亿训练集中，选对不足为奇，我在Cyberpunk2077中cos希里并截屏得到的图片算是zero-shot了，看看效果如何。</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/daughter1.png" alt="我不信没玩过巫师的CLIP能get my idea"></p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP17.png" alt="出人意料啊"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/daughter1.png" alt="我不信没玩过巫师的CLIP能get my idea"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP17.png" alt="出人意料啊"></p>
 <p>坏消息：CLIP没能认出这是Ciri </p>
 <p>好消息：它认为这里Witcher元素更加匹配，并且car的权值0.2255与背景符合，非常合理，太棒了！</p>
-<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP18.png" alt="那我引入赛博朋克又将如何呢"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/CLIP/CLIP18.png" alt="那我引入赛博朋克又将如何呢"></p>
 <p>又是非常合理的结果，Cyberpunk占比远超Witcher, 我的取景点是从大坝进入主城区的普通公路，平平无奇，竟然被认出来了，CLIP确实效果奇佳，zero-shot的泛化能力非常强！！！</p>
 <p>参考文献：</p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2103.00020">Learning Transferable Visual Models From Natural Language Supervision (arxiv.org)</a></p>
@@ -577,7 +577,7 @@
                 <a href="/2024/06/18/the-journey-is-the-reward/">
                     <div class="card-image">
                         
-                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/11%26%2677G2.jpg" class="responsive-img" alt="The journey is the reward">
+                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/The-journey-is-the-reward/77-11.jpg" class="responsive-img" alt="The journey is the reward">
                         
                         <span class="card-title">The journey is the reward</span>
                     </div>
@@ -629,7 +629,7 @@
                 <a href="/2024/06/03/bloodandwine/">
                     <div class="card-image">
                         
-                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/fairytale0.jpg" class="responsive-img" alt="血与酒的童话">
+                        <img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/BloodandWine/fairytale0.jpg" class="responsive-img" alt="血与酒的童话">
                         
                         <span class="card-title">血与酒的童话</span>
                     </div>

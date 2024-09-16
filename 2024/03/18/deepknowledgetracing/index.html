@@ -366,27 +366,27 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="DeepKnowledgeTracing"><a href="#DeepKnowledgeTracing" class="headerlink" title="DeepKnowledgeTracing"></a>DeepKnowledgeTracing</h1><p><img src="/2024/03/18/deepknowledgetracing/DKT.png" alt="Abstract"></p>
+                <h1 id="DeepKnowledgeTracing"><a href="#DeepKnowledgeTracing" class="headerlink" title="DeepKnowledgeTracing"></a>DeepKnowledgeTracing</h1><p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/DeepKnowledgeTracing/DKT.png" alt="Abstract"></p>
 <p>DeepKnowledgeTracing（DKT）是一种基于深度学习的模型，用于对学生的知识掌握情况进行建模和预测，可以通过分析学生的历史答题记录来推断他们的知识水平和学习进度。</p>
 <p>DKT的核心思想是利用递归神经网络（RNN）来捕捉学生的学习轨迹和知识状态的动态变化。模型接受学生的答题序列作为输入，并通过时间步的迭代来预测学生在下一个时间步的答题情况。通过不断地对学生的答题进行预测和比较，DKT可以逐渐调整模型的参数，提高对学生知识状态的准确预测能力。</p>
 <p>DKT的关键创新是引入了一个称为”学生知识状态向量”的概念，它用于表示学生在不同知识点上的掌握程度。该向量通过RNN中的记忆单元来维护和更新，从而捕捉学生的知识状态随时间的变化。通过将学生的答题序列与学生知识状态向量进行联合建模，DKT可以更准确地推断学生在不同知识点上的知识水平。</p>
 <p>使用DKT进行知识状态预测可以有助于教育领域的一些应用，例如个性化学习和智能辅导系统。通过对学生的知识状态进行建模和预测，教育者可以更好地了解学生的学习需求和困难，从而为他们提供个性化的学习支持和指导。</p>
-<p><img src="/2024/03/18/deepknowledgetracing/DKT1.png" alt="DKT优势"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/DeepKnowledgeTracing/DKT1.png" alt="DKT优势"></p>
 <p><strong>新型的RNN输入编码，表现遥遥领先，无需专家注释，生成定制题库</strong></p>
-<p><img src="/2024/03/18/deepknowledgetracing/DKT2.png" alt="DKT训练测试"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/DeepKnowledgeTracing/DKT2.png" alt="DKT训练测试"></p>
 <p>此模型的自我学习能力很强，可以根据做过的题目类型以及准确率来预测涉及某些知识点的答题情况，并不必需人工分类注释，很多功能类似的大模型在做数据分析时往往需要人工确定参数阈值，兼容性不够好。</p>
-<p><img src="/2024/03/18/deepknowledgetracing/DKT3.png" alt="RNN"></p>
-<p><img src="/2024/03/18/deepknowledgetracing/DKT6.png" alt="LSTM"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/DeepKnowledgeTracing/DKT3.png" alt="RNN"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/DeepKnowledgeTracing/DKT6.png" alt="LSTM"></p>
 <p>RNN的LSTM所提供的长期记忆功能是其重要优势</p>
-<p><img src="/2024/03/18/deepknowledgetracing/DKT4.png" alt="RNN工作基本原理"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/DeepKnowledgeTracing/DKT4.png" alt="RNN工作基本原理"></p>
 <p>在DeepKnowledgeTracing（DKT）模型中，one-hot编码用于表示学生的答题情况或知识点的状态。</p>
 <p>在one-hot编码中，对于一个具有N个可能取值的离散变量，将其编码为一个长度为N的二进制向量。向量中只有一个元素为1，表示当前取值，而其他元素都为0。这样的编码方式能够将每个离散取值映射到一个唯一的向量表示。在DKT中，one-hot编码用于表示学生的答题情况。假设有M个不同的题目，每个题目都有可能的答案选项（如A、B、C、D等）。那么，每个题目的答题情况可以使用一个长度为M的one-hot向量来表示。向量中只有对应学生选择的答案选项为1，其他选项均为0。</p>
 <p>类似地，DKT中的知识点状态也可以使用one-hot编码表示。如果有K个不同的知识点，那么每个知识点的状态可以使用一个长度为K的one-hot向量来表示。向量中只有对应知识点为当前学生所掌握的知识点时为1，其他知识点均为0。</p>
 <p>通过使用one-hot编码，DKT模型能够将离散的答题情况或知识点状态转换为可供神经网络处理的向量表示形式。这样的表示方式使得模型能够更好地处理离散数据，并进行相应的预测和推断。</p>
-<p><img src="/2024/03/18/deepknowledgetracing/DKT7.png" alt="输入输出"></p>
-<p><img src="/2024/03/18/deepknowledgetracing/DKT9.png" alt="输入"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/DeepKnowledgeTracing/DKT7.png" alt="输入输出"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/DeepKnowledgeTracing/DKT9.png" alt="输入"></p>
 <p><img src="/2024/03/18/deepknowledgetracing/DKT8.png" alt="输出"></p>
-<p><img src="/2024/03/18/deepknowledgetracing/DKT5.png" alt="DKT效果"></p>
+<p><img src="https://chris2ease-1324337338.cos.ap-shanghai.myqcloud.com/DeepKnowledgeTracing/DKT5.png" alt="DKT效果"></p>
 <p>DKT需要大量答题数据，对于线上的大规模教学更有帮助。</p>
 <p>DKT核心代码是三个文件:”deep_knowledge_tracing_model.py“,”data.py”,”main.py”.</p>
 <h2 id="”deep-knowledge-tracing-model-py“"><a href="#”deep-knowledge-tracing-model-py“" class="headerlink" title="”deep_knowledge_tracing_model.py“"></a>”deep_knowledge_tracing_model.py“</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
